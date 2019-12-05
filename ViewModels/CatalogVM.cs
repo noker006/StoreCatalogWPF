@@ -5,9 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using StoreCatalogWPF.ViewModels.GeneralVMs;
 using StoreCatalogWPF.Models.Product.TypeProduct;
 using StoreCatalogWPF.Models;
+
 
 namespace StoreCatalogWPF.ViewModels
 {
@@ -15,9 +19,11 @@ namespace StoreCatalogWPF.ViewModels
     {
         public CatalogVM(string name,VMManager root):base(name,root)
         {
-            SelectedTypeProduct = 1000;
+            catalog = new Catalog();
+            VisibilityAudioEqupments = Visibility.Collapsed;
+            ActualTypeProductList = new ObservableCollection<object>(catalog.acousticHiFis);
         }
-        private Catalog catalog = new Catalog();
+        private Catalog catalog;
 
         private int selectedTypeProduct;
         public int SelectedTypeProduct
@@ -29,23 +35,23 @@ namespace StoreCatalogWPF.ViewModels
                 {
                     case 0:
                         {
-                            ActualMapingTypeProduct = catalog.audio;
+                            VisibilityAudioEqupments = Visibility.Visible;
                             break;
                         }
                     case 1:
                         {
-                            ActualMapingTypeProduct = catalog.photoVideo;
+                            
                             break;
                         }
                     case 2:
                         {
-                            ActualMapingTypeProduct = catalog.phone_gadget;
+                         
                             break;
                         }
                     default:
                         break;
                 }
-                OnPropertyChanged("SelectedType");
+                OnPropertyChanged("SelectedTypeProduct");
             }
             get
             {
@@ -53,33 +59,28 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        private string selectedTypeAudio;
-        public string SelectedTypeAudio
+        private Visibility visibilityAudioEqupments;
+        public Visibility VisibilityAudioEqupments
+        {
+            set
+            {
+                visibilityAudioEqupments = value;
+                OnPropertyChanged("VisibilityAudioEqupments");
+            }
+            get
+            {
+                return visibilityAudioEqupments;
+            }
+        }
+
+        private int selectedTypeAudio;
+        public int SelectedTypeAudio
         {
             set
             {
 
                 selectedTypeAudio = value;
-                switch (selectedTypeAudio)
-                {
-                    case "s":
-                        {
-                            ActualMapingSubtypes = catalog.acousticHiFis;
-                            break;
-                        }
-                    case "sa":
-                        {
-                            ActualMapingSubtypes = catalog.musicCentre;
-                            break;
-                        }
-                    case "syka":
-                        {
-                            ActualMapingSubtypes = catalog.radio;
-                            break;
-                        }
-                    default:
-                        break;
-                }
+                ActualMapingSubtypes = selectedTypeAudio;
                 OnPropertyChanged("SelecteSubtypes");
             }
             get
@@ -88,23 +89,8 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-
-        private object actualMapingTypeProduct;
-        public object ActualMapingTypeProduct
-        {
-            set
-            {
-                actualMapingTypeProduct = value;
-                OnPropertyChanged("ActualMapingTypeProduct");
-            }
-            get
-            {
-                return actualMapingTypeProduct;
-            }
-        }
-
-        private object actualMapingSubtypes;
-        public object ActualMapingSubtypes
+        private int actualMapingSubtypes;
+        public int ActualMapingSubtypes
         {
             set
             {
@@ -116,6 +102,29 @@ namespace StoreCatalogWPF.ViewModels
                 return actualMapingSubtypes;
             }
         }
+
+        private object actualSelectedProduct;
+
+        public object ActualSelectedProduct
+        {
+            set
+            {
+                actualSelectedProduct = value;
+                OnPropertyChanged("ActualSelectedProduct");
+            }
+            get
+            {
+                return actualSelectedProduct;
+            }
+        }
+
+        private string producer;
+
+
+        public ObservableCollection<object> ActualTypeProductList { set; get; }
+
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop ="")

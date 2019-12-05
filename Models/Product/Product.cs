@@ -54,7 +54,6 @@ namespace StoreCatalogWPF.Models.Product
         }
 
         private string phoneNumber;
-
         public string PhoneNumber
         {
             set

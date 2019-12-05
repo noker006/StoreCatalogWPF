@@ -51,6 +51,5 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        public string SelectedTypeAudio { get; set; }
     }
 }

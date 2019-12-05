@@ -8,73 +8,75 @@
              xmlns:AudioEqupment="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments"
              xmlns:Phone_gadget="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets"
              xmlns:PhotoVideoEquipment="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments"
+             xmlns:TemplateSelectors ="clr-namespace:StoreCatalogWPF.TemplateSelectors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="AliceBlue">
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type AudioEqupment:AcousticHiFi}" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Button Grid.Column="1" Grid.Row="1" Content="xyz"/>
-            </Grid>
-        </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type TypeProduct:AudioEquipment}">
-            <StackPanel DataContext="{Binding  }" >
-                <ComboBox SelectedItem ="{Binding SelectedTypeAudio}">
-                <ComboBoxItem>
-                    <TextBlock Text="HiFi Acoustic"/>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Text="MusicCentre"/>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Text="Radio"/>
-                </ComboBoxItem>
-            </ComboBox>
-            </StackPanel>
-        </DataTemplate>
 
-        <DataTemplate DataType="{x:Type TypeProduct:PhotoVideoEquipment}">
-            <Grid>
-                <TextBlock Text="wqdefrj"/>
-            </Grid>
-        </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type TypeProduct:Phone_Phonegadget}">
-            <Grid>
-                <TextBlock Text="wqdefrj"/>
-            </Grid>
-        </DataTemplate>
     </UserControl.Resources>
-    
-    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition  Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ComboBox Grid.Column="0" Grid.Row="0" SelectedIndex="{Binding SelectedTypeProduct}" IsEditable="True" Margin="0,0,181,0" >
-            <ComboBoxItem>
-                <TextBlock Text="Audio Equipment"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock Text="Photo-Video Equipment"/>
-            </ComboBoxItem>
-            <ComboBoxItem>
-                <TextBlock Text="Phone and Phonegadget"/>
-            </ComboBoxItem>
-        </ComboBox>
-        <ContentPresenter  Grid.Column="1" Grid.Row="0" Content="{Binding ActualMapingTypeProduct}"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
+            <ComboBox SelectedIndex="{Binding SelectedTypeProduct}" IsEditable="True" Width="130"  >
+                <ComboBoxItem>
+                    <TextBlock Text="Audio Equipment"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Text="Photo-Video Equipment"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Text="Phone and Phonegadget"/>
+                </ComboBoxItem>
+            </ComboBox>
+            <ComboBox Visibility="{Binding VisibilityAudioEqupments}" Width="130">
+                <ComboBoxItem>
+                    <TextBlock Text="AcousticHiFi"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Text="MusicCenter"/>
+                </ComboBoxItem>
+            </ComboBox>
+            <ComboBox  Visibility="{Binding VisibilityAudioEqupments}" Width="130">
+                <ComboBoxItem>
+                    <TextBlock Text="PhotoCamera"/>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock Text="VideoCamera"/>
+                </ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding ActualTypeProductList}" SelectedItem="{Binding ActualSelectedProduct}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Capasity}"/>
+                        <TextBlock Text="{Binding Producer}"/>
+                        <TextBlock Text="{Binding UpperFrequencyRange}" />
+                        <TextBlock Text="{Binding DownFrequencyRange}"/>
+                        <TextBlock Text="{Binding DownFrequencyRange}"/>
+                        <TextBlock Text="{Binding BatteryCapacity, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Column="2" Grid.Row="2" DataContext="{Binding ActualSelectedProduct}">
+            <TextBlock Text="Title"/>
+            <TextBox Text="{Binding Title}"/>
+            <TextBlock Text="Producer"/>
+            <TextBox Text="{Binding Producer}"/>
+            <TextBlock Text="Producer"/>
+            <TextBox Text="{Binding Price}"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>

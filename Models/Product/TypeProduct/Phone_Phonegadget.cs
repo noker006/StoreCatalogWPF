@@ -8,5 +8,33 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
 {
     class Phone_Phonegadget:Product
     {
+        private string oS;
+        public string OS
+        {
+            set
+            {
+                oS = value;
+            }
+            get
+            {
+                return oS;
+            }
+        }
+
+        private string batteryCapacity;
+        public string BatteryCapacity
+        {
+            set
+            {
+                batteryCapacity = value;
+            }
+            get
+            {
+                return batteryCapacity;
+            }
+        }
+
+        
+
     }
 }

@@ -42,11 +42,11 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
         {
             set
             {
-                Resolution = value;
+                resolution = value;
             }
             get
             {
-                return Resolution;
+                return resolution;
             }
         }
     }

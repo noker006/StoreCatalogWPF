@@ -7,7 +7,7 @@
         xmlns:ViewModel="clr-namespace:StoreCatalogWPF.ViewModels"
         xmlns:View="clr-namespace:StoreCatalogWPF.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" SizeToContent="WidthAndHeight"  >
     <Window.Resources>
         <DataTemplate DataType="{x:Type ViewModel:CatalogVM}">
             <View:CatalogV/>
