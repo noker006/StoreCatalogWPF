@@ -20,10 +20,13 @@ namespace StoreCatalogWPF.ViewModels
         public CatalogVM(string name,VMManager root):base(name,root)
         {
             catalog = new Catalog();
-            VisibilityAudioEqupments = Visibility.Collapsed;
-            ActualTypeProductList = new ObservableCollection<object>(catalog.acousticHiFis);
+            //VisibilityAudioEqupments = Visibility.Collapsed;
+            //VisibilityPhone_Gadgets = Visibility.Collapsed;
         }
         private Catalog catalog;
+        //private Visibility visibilityAudioEqupments;
+        //private Visibility visibilityPhone_Gadgets;
+        //private Visibility visibilityPhotoVideoEquipments;
 
         private int selectedTypeProduct;
         public int SelectedTypeProduct
@@ -35,17 +38,17 @@ namespace StoreCatalogWPF.ViewModels
                 {
                     case 0:
                         {
-                            VisibilityAudioEqupments = Visibility.Visible;
+                            //VisibilityAudioEqupments = Visibility.Visible;
                             break;
                         }
                     case 1:
                         {
-                            
+                            //VisibilityPhone_Gadgets = Visibility.Visible;
                             break;
                         }
                     case 2:
                         {
-                         
+                            //VisibilityPhotoVideoEquipments = Visibility.Visible;
                             break;
                         }
                     default:
@@ -59,49 +62,119 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        private Visibility visibilityAudioEqupments;
-        public Visibility VisibilityAudioEqupments
+        //public Visibility VisibilityAudioEqupments
+        //{
+        //    set
+        //    {
+        //        visibilityAudioEqupments = value;
+        //        if (value != Visibility.Collapsed)
+        //        {
+        //            VisibilityPhone_Gadgets = Visibility.Collapsed;
+        //            VisibilityPhotoVideoEquipments = Visibility.Collapsed;
+        //        }
+        //        OnPropertyChanged("VisibilityAudioEqupments");
+        //    }
+        //    get
+        //    {
+        //        return visibilityAudioEqupments;
+        //    }
+        //}
+
+
+        //public Visibility VisibilityPhone_Gadgets
+        //{
+        //    set
+        //    {
+        //        visibilityPhone_Gadgets = value;
+        //        VisibilityAudioEqupments = Visibility.Collapsed;
+        //        VisibilityPhotoVideoEquipments = Visibility.Collapsed;
+        //        OnPropertyChanged("VisibilityPhone_Gadgets");
+        //    }
+        //    get
+        //    {
+        //        return visibilityPhone_Gadgets;
+        //    }
+        //}
+
+
+        //public Visibility VisibilityPhotoVideoEquipments
+        //{
+        //    set
+        //    {
+        //        visibilityPhotoVideoEquipments = value;
+        //        VisibilityAudioEqupments = Visibility.Collapsed;
+        //        VisibilityPhone_Gadgets = Visibility.Collapsed;
+        //        OnPropertyChanged("VisibilityPhotoVideoEquipments");
+        //    }
+        //    get
+        //    {
+        //        return visibilityPhotoVideoEquipments;
+        //    }
+        //}
+
+        private int selectedAudioEqupment;
+        
+        public int SelectedAudioEqupment
         {
             set
             {
-                visibilityAudioEqupments = value;
-                OnPropertyChanged("VisibilityAudioEqupments");
+                selectedAudioEqupment = value;
+                switch (selectedTypeProduct)
+                {
+                    case 0:
+                        {
+                            ActualListProducts = new ObservableCollection<object>(catalog.AcousticHiFis);
+                            break;
+                        }
+                    case 1:
+                        {
+                            ActualListProducts = new ObservableCollection<object>(catalog.MusicCentres);
+                            break;
+                        }
+                    case 2:
+                        {
+                            ActualListProducts = new ObservableCollection<object>(catalog.Radios);
+                            break;
+                        }
+                    default:
+                        break;
+                }
             }
             get
             {
-                return visibilityAudioEqupments;
+                return selectedAudioEqupment;
             }
         }
 
-        private int selectedTypeAudio;
-        public int SelectedTypeAudio
+        private int selectedPhotoVideoEquipment;
+
+        public int SelectedPhotoVideoEquipment
         {
             set
             {
-
-                selectedTypeAudio = value;
-                ActualMapingSubtypes = selectedTypeAudio;
-                OnPropertyChanged("SelecteSubtypes");
+                selectedPhotoVideoEquipment = value;
+                switch (selectedTypeProduct)
+                {
+                    case 0:
+                        {
+                            ActualListProducts = new ObservableCollection<object>(catalog.PhotoCameras);
+                            break;
+                        }
+                    case 1:
+                        {
+                            ActualListProducts = new ObservableCollection<object>(catalog.videoCameras);
+                            break;
+                        }
+                    default:
+                        break;
+                }
             }
             get
             {
-                return selectedTypeAudio;
+                return selectedPhotoVideoEquipment;
             }
         }
 
-        private int actualMapingSubtypes;
-        public int ActualMapingSubtypes
-        {
-            set
-            {
-                actualMapingSubtypes = value;
-                OnPropertyChanged("ActualMapingSubtypes");
-            }
-            get
-            {
-                return actualMapingSubtypes;
-            }
-        }
 
         private object actualSelectedProduct;
 
@@ -118,10 +191,7 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        private string producer;
-
-
-        public ObservableCollection<object> ActualTypeProductList { set; get; }
+        public ObservableCollection<object> ActualListProducts { set; get; }
 
 
 

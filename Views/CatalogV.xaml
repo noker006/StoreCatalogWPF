@@ -12,12 +12,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="AliceBlue">
     <UserControl.Resources>
-
+        <DataTemplate DataType="{x:Type AudioEqupment:AcousticHiFi}">
+            <StackPanel>
+                <TextBlock Text="Sensitivity"/>
+                <TextBox Text="{Binding Sensitivity}"/>
+            </StackPanel>
+        </DataTemplate>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -27,18 +32,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
-            <ComboBox SelectedIndex="{Binding SelectedTypeProduct}" IsEditable="True" Width="130"  >
-                <ComboBoxItem>
-                    <TextBlock Text="Audio Equipment"/>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Text="Photo-Video Equipment"/>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Text="Phone and Phonegadget"/>
-                </ComboBoxItem>
-            </ComboBox>
-            <ComboBox Visibility="{Binding VisibilityAudioEqupments}" Width="130">
+            <ComboBox SelectedIndex="{Binding SelectedTypeProduct}" IsEditable="True" Width="130">
+                <ComboBox SelectedIndex="{Binding SelectedAudioEqupment}" Width="130">
                 <ComboBoxItem>
                     <TextBlock Text="AcousticHiFi"/>
                 </ComboBoxItem>
@@ -46,7 +41,7 @@
                     <TextBlock Text="MusicCenter"/>
                 </ComboBoxItem>
             </ComboBox>
-            <ComboBox  Visibility="{Binding VisibilityAudioEqupments}" Width="130">
+            <ComboBox  Width="130" SelectedIndex="{Binding SelectedPhotoVideoEquipment}">
                 <ComboBoxItem>
                     <TextBlock Text="PhotoCamera"/>
                 </ComboBoxItem>
@@ -55,7 +50,7 @@
                 </ComboBoxItem>
             </ComboBox>
         </StackPanel>
-        <ListBox ItemsSource="{Binding ActualTypeProductList}" SelectedItem="{Binding ActualSelectedProduct}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2">
+        <ListBox ItemsSource="{Binding ActualTypeProductList}" SelectedItem="{Binding ActualSelectedProduct}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2" Margin="0,0,0.4,41.6">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -74,9 +69,9 @@
             <TextBox Text="{Binding Title}"/>
             <TextBlock Text="Producer"/>
             <TextBox Text="{Binding Producer}"/>
-            <TextBlock Text="Producer"/>
+            <TextBlock Text="Price"/>
             <TextBox Text="{Binding Price}"/>
         </StackPanel>
-
+        <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}" />
     </Grid>
 </UserControl>

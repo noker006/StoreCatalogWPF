@@ -17,13 +17,14 @@ namespace StoreCatalogWPF.Models
     {
        public Catalog()
         {
-            acousticHiFis = new ObservableCollection<AcousticHiFi>
+            AcousticHiFis = new ObservableCollection<AcousticHiFi>
             {
                 new AcousticHiFi{Title="TUrboAcoustic", Price=10,Capasity=30, Producer="Sven",UpperFrequencyRange=32,DownFrequencyRange=43},
                 new AcousticHiFi{Title="GiperAcoustic", Price=20,Capasity=42, Producer="Sumsung",UpperFrequencyRange=32,DownFrequencyRange=43},
-                new AcousticHiFi{ Price=30,Capasity=52, Producer="Lg",UpperFrequencyRange=32,DownFrequencyRange=43},
+                new AcousticHiFi{Title="GiperAcoustic", Price=30,Capasity=52, Producer="Lg",UpperFrequencyRange=32,DownFrequencyRange=43},
+
             };
-            photoCameras = new ObservableCollection<PhotoCamera>
+            PhotoCameras = new ObservableCollection<PhotoCamera>
             {
                 new PhotoCamera{ Title="TUrboCamera", Price=20,Producer="Nikon", Resolution="12X234", TypeOfCamera="mirror" },
                 new PhotoCamera{Title="GiperCamera", Price=30, Producer="ZarYA", Resolution="12X234", TypeOfCamera="mirror" }
@@ -32,9 +33,9 @@ namespace StoreCatalogWPF.Models
 
         }
 
-       public AudioEquipment audio = new AudioEquipment();
-       public PhotoVideoEquipment photoVideo = new PhotoVideoEquipment();
-       public Phone_Phonegadget phone_gadget = new Phone_Phonegadget();
+       public AudioEquipment Audio = new AudioEquipment();
+       public PhotoVideoEquipment PhotoVideo = new PhotoVideoEquipment();
+       public Phone_Phonegadget Phone_Gadget = new Phone_Phonegadget();
 
        public AcousticHiFi acoustic = new AcousticHiFi();
        public MusicCentre musicCentre = new MusicCentre();
@@ -46,8 +47,16 @@ namespace StoreCatalogWPF.Models
        public PhotoCamera photoCamera = new PhotoCamera();
        public VideoCamera VideoCamera = new VideoCamera();
 
-       public ObservableCollection<AcousticHiFi> acousticHiFis = new ObservableCollection<AcousticHiFi>();
-       public ObservableCollection<PhotoCamera> photoCameras = new ObservableCollection<PhotoCamera>();
+
+       public ObservableCollection<AcousticHiFi> AcousticHiFis = new ObservableCollection<AcousticHiFi>();
+       public ObservableCollection<MusicCentre> MusicCentres = new ObservableCollection<MusicCentre>();
+       public ObservableCollection<Radio> Radios = new ObservableCollection<Radio>();
+
+        public ObservableCollection<Phone> Phones = new ObservableCollection<Phone>();
+        public ObservableCollection<SmartWatch> SmartWatches = new ObservableCollection<SmartWatch>();
+
+        public ObservableCollection<PhotoCamera> PhotoCameras = new ObservableCollection<PhotoCamera>();
+        public ObservableCollection<VideoCamera> videoCameras = new ObservableCollection<VideoCamera>();
 
 
 
