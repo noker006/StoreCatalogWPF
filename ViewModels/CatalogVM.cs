@@ -20,39 +20,105 @@ namespace StoreCatalogWPF.ViewModels
         public CatalogVM(string name,VMManager root):base(name,root)
         {
             catalog = new Catalog();
-            //VisibilityAudioEqupments = Visibility.Collapsed;
-            //VisibilityPhone_Gadgets = Visibility.Collapsed;
+            TitlesTypeProduct = new List<string> { "AudioEqupments", "Phone and gadgets", "Photo-Video Equpments" };
+            TitlesAudioEquipment = new List<string> { "Acoustic HiFi", "MusicCentre", "Radio" };
+            TitlesPhone_Phonegadget = new List<string> { "Phone", "SmartWatch" };
+            TitlesPhotoVideoEquipment = new List<string> { "PhotoCamera", "VideoCamera" };
+            visibilityAudioEquipment = Visibility.Collapsed;
+            visibilityPhone_Phonegadget = Visibility.Collapsed;
+            visibilityPhotoVideoEquipment = Visibility.Collapsed;
         }
-        private Catalog catalog;
-        //private Visibility visibilityAudioEqupments;
-        //private Visibility visibilityPhone_Gadgets;
-        //private Visibility visibilityPhotoVideoEquipments;
 
-        private int selectedTypeProduct;
-        public int SelectedTypeProduct
+
+
+        private Catalog catalog;
+
+
+        private string selectedTypeProduct;
+        private string selectedAudioEquipment;
+        private string selectedPhone_Phonegadget;
+        private string selectedPhotoVideoEquipment;
+
+
+        private Visibility visibilityAudioEquipment;
+        private Visibility visibilityPhone_Phonegadget;
+        private Visibility visibilityPhotoVideoEquipment;
+
+
+        public List<string>  TitlesTypeProduct { set; get; }
+        public List<string> TitlesAudioEquipment { set; get; }
+        public List<string> TitlesPhone_Phonegadget { set; get; }
+        public List<string> TitlesPhotoVideoEquipment { set; get; }
+
+        public Visibility VisibilityAudioEquipment
+        {
+            set
+            {
+                visibilityAudioEquipment = value;
+                OnPropertyChanged("VisibilityAudioEquipment");
+            }
+            get
+            {
+                return visibilityAudioEquipment;
+            }
+        }
+
+        public Visibility VisibilityPhone_Phonegadget
+        {
+            set
+            {
+                visibilityPhone_Phonegadget = value;
+                OnPropertyChanged("VisibilityPhone_Phonegadget");
+            }
+            get
+            {
+                return visibilityPhone_Phonegadget;
+            }
+        }
+
+        public Visibility VisibilityPhotoVideoEquipment
+        {
+            set
+            {
+                visibilityPhotoVideoEquipment = value;
+                OnPropertyChanged("VisibilityPhotoVideoEquipment");
+            }
+            get
+            {
+                return visibilityPhotoVideoEquipment;
+            }
+        }
+
+
+        public string SelectedTypeProduct
         {
             set
             {
                 selectedTypeProduct = value;
                 switch (selectedTypeProduct)
                 {
-                    case 0:
+                    case "AudioEqupments":
                         {
-                            //VisibilityAudioEqupments = Visibility.Visible;
+                            VisibilityPhone_Phonegadget = Visibility.Collapsed;
+                            VisibilityPhotoVideoEquipment = Visibility.Collapsed;
+                            VisibilityAudioEquipment = Visibility.Visible;
                             break;
                         }
-                    case 1:
+                    case "Phone and gadgets":
                         {
-                            //VisibilityPhone_Gadgets = Visibility.Visible;
+                            VisibilityAudioEquipment = Visibility.Collapsed;
+                            VisibilityPhotoVideoEquipment = Visibility.Collapsed;
+                            VisibilityPhone_Phonegadget = Visibility.Visible;
                             break;
                         }
-                    case 2:
+                    case "Photo-Video Equpments":
                         {
-                            //VisibilityPhotoVideoEquipments = Visibility.Visible;
+                            VisibilityPhone_Phonegadget = Visibility.Collapsed;
+                            VisibilityAudioEquipment = Visibility.Collapsed;
+                             VisibilityPhotoVideoEquipment = Visibility.Visible;
                             break;
                         }
-                    default:
-                        break;
+                    default:break;
                 }
                 OnPropertyChanged("SelectedTypeProduct");
             }
@@ -62,112 +128,83 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        //public Visibility VisibilityAudioEqupments
-        //{
-        //    set
-        //    {
-        //        visibilityAudioEqupments = value;
-        //        if (value != Visibility.Collapsed)
-        //        {
-        //            VisibilityPhone_Gadgets = Visibility.Collapsed;
-        //            VisibilityPhotoVideoEquipments = Visibility.Collapsed;
-        //        }
-        //        OnPropertyChanged("VisibilityAudioEqupments");
-        //    }
-        //    get
-        //    {
-        //        return visibilityAudioEqupments;
-        //    }
-        //}
-
-
-        //public Visibility VisibilityPhone_Gadgets
-        //{
-        //    set
-        //    {
-        //        visibilityPhone_Gadgets = value;
-        //        VisibilityAudioEqupments = Visibility.Collapsed;
-        //        VisibilityPhotoVideoEquipments = Visibility.Collapsed;
-        //        OnPropertyChanged("VisibilityPhone_Gadgets");
-        //    }
-        //    get
-        //    {
-        //        return visibilityPhone_Gadgets;
-        //    }
-        //}
-
-
-        //public Visibility VisibilityPhotoVideoEquipments
-        //{
-        //    set
-        //    {
-        //        visibilityPhotoVideoEquipments = value;
-        //        VisibilityAudioEqupments = Visibility.Collapsed;
-        //        VisibilityPhone_Gadgets = Visibility.Collapsed;
-        //        OnPropertyChanged("VisibilityPhotoVideoEquipments");
-        //    }
-        //    get
-        //    {
-        //        return visibilityPhotoVideoEquipments;
-        //    }
-        //}
-
-        private int selectedAudioEqupment;
-        
-        public int SelectedAudioEqupment
+        public string SelectedAudioEquipment
         {
             set
             {
-                selectedAudioEqupment = value;
-                switch (selectedTypeProduct)
+                selectedAudioEquipment = value;
+                switch (selectedAudioEquipment)
                 {
-                    case 0:
+                    case "Acoustic HiFi":
                         {
                             ActualListProducts = new ObservableCollection<object>(catalog.AcousticHiFis);
                             break;
                         }
-                    case 1:
+                    case "MusicCentre":
                         {
-                            ActualListProducts = new ObservableCollection<object>(catalog.MusicCentres);
                             break;
                         }
-                    case 2:
+                    case "Radio":
                         {
-                            ActualListProducts = new ObservableCollection<object>(catalog.Radios);
                             break;
                         }
                     default:
                         break;
                 }
+                OnPropertyChanged("SelectedAudioEquipment");
             }
             get
             {
-                return selectedAudioEqupment;
+                return selectedAudioEquipment;
             }
         }
 
-        private int selectedPhotoVideoEquipment;
+        public string SelectedPhone_Phonegadget
+        {
+            set
+            {
+                selectedPhone_Phonegadget = value;
+                switch (selectedPhone_Phonegadget)
+                {
+                    case "Phone":
+                        {
+                            break;
+                        }
+                    case "SmartWatch":
+                        {
+                            break;
+                        }
+                    default:
+                        break;
+                }
+                OnPropertyChanged("SelectedPhone_Phonegadget");
+            }
+            get
+            {
+                return selectedPhone_Phonegadget;
+            }
+        }
 
-        public int SelectedPhotoVideoEquipment
+        public string SelectedPhotoVideoEquipment
         {
             set
             {
                 selectedPhotoVideoEquipment = value;
-                switch (selectedTypeProduct)
+                switch (selectedPhotoVideoEquipment)
                 {
-                    case 0:
+                    case "PhotoCamera":
                         {
                             ActualListProducts = new ObservableCollection<object>(catalog.PhotoCameras);
                             break;
                         }
-                    case 1:
+                    case "VideoCamera":
                         {
-                            ActualListProducts = new ObservableCollection<object>(catalog.videoCameras);
                             break;
                         }
                     default:
                         break;
                 }
+                OnPropertyChanged("SelectedPhotoVideoEquipment");
             }
             get
             {
@@ -191,7 +228,21 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public ObservableCollection<object> ActualListProducts { set; get; }
+
+        private ObservableCollection<object> actualListProducts;
+        public ObservableCollection<object> ActualListProducts
+        {
+            set
+            {
+                actualListProducts = value;
+                OnPropertyChanged("ActualListProducts");
+            }
+            get
+            {
+                return actualListProducts;
+            }
+        }
+
 
 
 

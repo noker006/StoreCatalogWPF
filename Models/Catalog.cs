@@ -19,7 +19,7 @@ namespace StoreCatalogWPF.Models
         {
             AcousticHiFis = new ObservableCollection<AcousticHiFi>
             {
-                new AcousticHiFi{Title="TUrboAcoustic", Price=10,Capasity=30, Producer="Sven",UpperFrequencyRange=32,DownFrequencyRange=43},
+                new AcousticHiFi{Title="TUrboAcoustic", Price=10,Capasity=30, Producer="Sven",UpperFrequencyRange=32,DownFrequencyRange=43,Sensitivity=123},
                 new AcousticHiFi{Title="GiperAcoustic", Price=20,Capasity=42, Producer="Sumsung",UpperFrequencyRange=32,DownFrequencyRange=43},
                 new AcousticHiFi{Title="GiperAcoustic", Price=30,Capasity=52, Producer="Lg",UpperFrequencyRange=32,DownFrequencyRange=43},
 
@@ -29,11 +29,15 @@ namespace StoreCatalogWPF.Models
                 new PhotoCamera{ Title="TUrboCamera", Price=20,Producer="Nikon", Resolution="12X234", TypeOfCamera="mirror" },
                 new PhotoCamera{Title="GiperCamera", Price=30, Producer="ZarYA", Resolution="12X234", TypeOfCamera="mirror" }
             };
-
-
+            System.Windows.Application.Current.Exit += Current_Exit;
         }
 
-       public AudioEquipment Audio = new AudioEquipment();
+        private void Current_Exit(object sender, System.Windows.ExitEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public AudioEquipment Audio = new AudioEquipment();
        public PhotoVideoEquipment PhotoVideo = new PhotoVideoEquipment();
        public Phone_Phonegadget Phone_Gadget = new Phone_Phonegadget();
 
@@ -58,6 +62,7 @@ namespace StoreCatalogWPF.Models
         public ObservableCollection<PhotoCamera> PhotoCameras = new ObservableCollection<PhotoCamera>();
         public ObservableCollection<VideoCamera> videoCameras = new ObservableCollection<VideoCamera>();
 
+        
 
 
         

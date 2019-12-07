@@ -21,8 +21,8 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -32,25 +32,12 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
-            <ComboBox SelectedIndex="{Binding SelectedTypeProduct}" IsEditable="True" Width="130">
-                <ComboBox SelectedIndex="{Binding SelectedAudioEqupment}" Width="130">
-                <ComboBoxItem>
-                    <TextBlock Text="AcousticHiFi"/>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Text="MusicCenter"/>
-                </ComboBoxItem>
-            </ComboBox>
-            <ComboBox  Width="130" SelectedIndex="{Binding SelectedPhotoVideoEquipment}">
-                <ComboBoxItem>
-                    <TextBlock Text="PhotoCamera"/>
-                </ComboBoxItem>
-                <ComboBoxItem>
-                    <TextBlock Text="VideoCamera"/>
-                </ComboBoxItem>
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding TitlesTypeProduct}" SelectedItem="{Binding SelectedTypeProduct }" IsEditable="True" Width="130"/>
+            <ComboBox ItemsSource="{Binding TitlesAudioEquipment }"  SelectedItem="{Binding SelectedAudioEquipment}" Width="130" Visibility="{Binding VisibilityAudioEquipment}"/>
+            <ComboBox ItemsSource="{Binding TitlesPhone_Phonegadget}"  SelectedItem="{Binding SelectedPhone_Phonegadget}" Width="130" Visibility="{Binding VisibilityPhone_Phonegadget}" />
+            <ComboBox ItemsSource="{Binding TitlesPhotoVideoEquipment}"  SelectedItem="{Binding SelectedPhotoVideoEquipment}" Width="130" Visibility="{Binding VisibilityPhotoVideoEquipment}" />
         </StackPanel>
-        <ListBox ItemsSource="{Binding ActualTypeProductList}" SelectedItem="{Binding ActualSelectedProduct}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2" Margin="0,0,0.4,41.6">
+        <ListBox ItemsSource="{Binding ActualListProducts}" SelectedItem="{Binding ActualSelectedProduct}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="2" Margin="0,0,0.4,41.6">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -72,6 +59,7 @@
             <TextBlock Text="Price"/>
             <TextBox Text="{Binding Price}"/>
         </StackPanel>
-        <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}" />
+        <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}"/>
+        <Button Grid.Column="0" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="28,0,22.4,9.6"/>
     </Grid>
 </UserControl>
