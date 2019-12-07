@@ -10,12 +10,18 @@
              xmlns:PhotoVideoEquipment="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments"
              xmlns:TemplateSelectors ="clr-namespace:StoreCatalogWPF.TemplateSelectors"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="AliceBlue">
+             d:DesignHeight="450" d:DesignWidth="800" Background="Orange">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type AudioEqupment:AcousticHiFi}">
             <StackPanel>
                 <TextBlock Text="Sensitivity"/>
                 <TextBox Text="{Binding Sensitivity}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type AudioEqupment:MusicCentre}">
+            <StackPanel>
+                <TextBlock Text="Sensitivity"/>
+                <TextBox Text="{Binding AmountEqualizerMode}"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
@@ -33,19 +39,38 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
             <ComboBox ItemsSource="{Binding TitlesTypeProduct}" SelectedItem="{Binding SelectedTypeProduct }" IsEditable="True" Width="130"/>
-            <ComboBox ItemsSource="{Binding TitlesAudioEquipment }"  SelectedItem="{Binding SelectedAudioEquipment}" Width="130" Visibility="{Binding VisibilityAudioEquipment}"/>
-            <ComboBox ItemsSource="{Binding TitlesPhone_Phonegadget}"  SelectedItem="{Binding SelectedPhone_Phonegadget}" Width="130" Visibility="{Binding VisibilityPhone_Phonegadget}" />
-            <ComboBox ItemsSource="{Binding TitlesPhotoVideoEquipment}"  SelectedItem="{Binding SelectedPhotoVideoEquipment}" Width="130" Visibility="{Binding VisibilityPhotoVideoEquipment}" />
+            <ComboBox ItemsSource="{Binding AudioEquipments}"  SelectedItem="{Binding SelectedAudioEquipment}" Width="130" Visibility="{Binding VisibilityAudioEquipment}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding SubtypeName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox ItemsSource="{Binding Phones_Phonegadgets}"  SelectedItem="{Binding SelectedPhone_Phonegadget}" Width="130" Visibility="{Binding VisibilityPhone_Phonegadget}" >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding SubtypeName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox ItemsSource="{Binding PhotoVideoEquipments}"  SelectedItem="{Binding SelectedPhotoVideoEquipment}" Width="130" Visibility="{Binding VisibilityPhotoVideoEquipment}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding SubtypeName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
         <ListBox ItemsSource="{Binding ActualListProducts}" SelectedItem="{Binding ActualSelectedProduct}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="2" Margin="0,0,0.4,41.6">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding Capasity}"/>
-                        <TextBlock Text="{Binding Producer}"/>
-                        <TextBlock Text="{Binding UpperFrequencyRange}" />
-                        <TextBlock Text="{Binding DownFrequencyRange}"/>
-                        <TextBlock Text="{Binding DownFrequencyRange}"/>
+                        <TextBlock Text="{Binding Producer, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding Title, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding Price, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding Capasity, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding UpperFrequencyRange, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding DownFrequencyRange, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock Text="{Binding BatteryCapacity, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </DataTemplate>
@@ -58,8 +83,21 @@
             <TextBox Text="{Binding Producer}"/>
             <TextBlock Text="Price"/>
             <TextBox Text="{Binding Price}"/>
+            <TextBlock Text="Phone Storage"/>
+            <TextBox Text="{Binding PhoneNumber}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="2">
+            <TextBlock Text="MinPrice"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text=""/>
+                <TextBox/>
+            </Grid>
         </StackPanel>
         <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}"/>
-        <Button Grid.Column="0" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="28,0,22.4,9.6"/>
+        <Button Grid.Column="0" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="28,0,22.4,9.6" Command="{Binding GoTo}" CommandParameter="AddProductVM" />
     </Grid>
 </UserControl>

@@ -7,8 +7,22 @@ using StoreCatalogWPF.Models.Product;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct
 {
-    class AudioEquipment:Product
+    class AudioEquipment:GeneralProduct
     {
+
+        private string subtypeName;
+
+        public string SubtypeName
+        {
+            set
+            {
+                subtypeName = value;
+            }
+            get
+            {
+                return subtypeName;
+            }
+        }
 
         private int capacity;
         public int Capasity

@@ -58,10 +58,14 @@
     <Compile Include="Models\Selection.cs" />
     <Compile Include="RelCommand\RelayCommand.cs" />
     <Compile Include="TemplateSelectors\TypeProductSelector.cs" />
+    <Compile Include="ViewModels\AddProductVM.cs" />
     <Compile Include="ViewModels\CatalogVM.cs" />
     <Compile Include="ViewModels\GeneralVMs\MainVM.cs" />
     <Compile Include="ViewModels\GeneralVMs\ViewModel.cs" />
     <Compile Include="ViewModels\GeneralVMs\VMManager.cs" />
+    <Compile Include="Views\AddProductV.xaml.cs">
+      <DependentUpon>AddProductV.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CatalogV.xaml.cs">
       <DependentUpon>CatalogV.xaml</DependentUpon>
     </Compile>
@@ -77,6 +81,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\AddProductV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CatalogV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Catalog.cs" />
-    <Compile Include="Models\Product\Product.cs" />
+    <Compile Include="Models\Product\GeneralProduct.cs" />
     <Compile Include="Models\Product\TypeProduct\AudioEquipment.cs" />
     <Compile Include="Models\Product\TypeProduct\AudioEqupments\AcousticHiFi.cs" />
     <Compile Include="Models\Product\TypeProduct\AudioEqupments\MusicCentre.cs" />

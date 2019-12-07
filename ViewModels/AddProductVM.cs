@@ -2,36 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+using System.Threading.Tasks;
 using StoreCatalogWPF.ViewModels.GeneralVMs;
-using StoreCatalogWPF.Models.Product.TypeProduct;
+using System.ComponentModel;
 using StoreCatalogWPF.Models;
-
 
 namespace StoreCatalogWPF.ViewModels
 {
-    class CatalogVM : ViewModel, INotifyPropertyChanged
+    class AddProductVM : ViewModel,INotifyPropertyChanged
     {
-        public CatalogVM(string name,VMManager root):base(name,root)
+        public AddProductVM(string name, VMManager root) : base(name, root)
         {
             catalog = new Catalog();
             TitlesTypeProduct = new List<string> { "AudioEqupments", "Phone and gadgets", "Photo-Video Equpments" };
             AudioEquipments = new List<object>(catalog.AllSubtypesAudioEquipment);
             Phones_Phonegadgets = new List<object>(catalog.AllSubtypesPhone_Phonegadget);
             PhotoVideoEquipments = new List<object>(catalog.AllSubtypesPhotoVideoEquipment);
-            visibilityAudioEquipment = Visibility.Collapsed;
-            visibilityPhone_Phonegadget = Visibility.Collapsed;
-            visibilityPhotoVideoEquipment = Visibility.Collapsed;
         }
-
         private Catalog catalog;
-
-        
 
 
         private string selectedTypeProduct;
@@ -45,13 +36,10 @@ namespace StoreCatalogWPF.ViewModels
         private Visibility visibilityPhotoVideoEquipment;
 
 
-        private object actualSelectedProduct;
-
-
-        private ObservableCollection<object> actualListProducts;
-
-
-        public List<string>  TitlesTypeProduct { set; get; }
+        public List<string> TitlesTypeProduct { set; get; }
+        public List<object> AudioEquipments { set; get; }
+        public List<object> Phones_Phonegadgets { set; get; }
+        public List<object> PhotoVideoEquipments { set; get; }
 
 
         public Visibility VisibilityAudioEquipment
@@ -119,13 +107,14 @@ namespace StoreCatalogWPF.ViewModels
                         {
                             VisibilityPhone_Phonegadget = Visibility.Collapsed;
                             VisibilityAudioEquipment = Visibility.Collapsed;
-                             VisibilityPhotoVideoEquipment = Visibility.Visible;
+                            VisibilityPhotoVideoEquipment = Visibility.Visible;
                             break;
                         }
-                    default:break;
+                    default: break;
                 }
                 OnPropertyChanged("SelectedTypeProduct");
             }
+
             get
             {
                 return selectedTypeProduct;
@@ -137,7 +126,6 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 selectedAudioEquipment = value;
-                ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedAudioEquipment));
                 OnPropertyChanged("SelectedAudioEquipment");
             }
             get
@@ -151,7 +139,6 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 selectedPhone_Phonegadget = value;
-                ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedPhone_Phonegadget));
                 OnPropertyChanged("SelectedPhone_Phonegadget");
             }
             get
@@ -165,7 +152,6 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 selectedPhotoVideoEquipment = value;
-                ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedPhotoVideoEquipment));
                 OnPropertyChanged("SelectedPhotoVideoEquipment");
             }
             get
@@ -176,53 +162,9 @@ namespace StoreCatalogWPF.ViewModels
 
 
 
-        public object ActualSelectedProduct
-        {
-            set
-            {
-                actualSelectedProduct = value;
-                OnPropertyChanged("ActualSelectedProduct");
-            }
-            get
-            {
-                return actualSelectedProduct;
-            }
-        }
-
-
-        public List<object> AudioEquipments { set; get; }
-        public List<object> Phones_Phonegadgets { set; get; }
-        public List<object> PhotoVideoEquipments { set; get; }
-
-        public ObservableCollection<object> ActualListProducts
-        {
-            set
-            {
-                actualListProducts = value;
-                OnPropertyChanged("ActualListProducts");
-            }
-            get
-            {
-                return actualListProducts;
-            }
-        }
-
-        private double minPrise;
-        private double MinPrise
-        {
-            set
-            {
-                minPrise = value;
-            }
-            get
-            {
-                return minPrise;
-            }
-        }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop ="")
+
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));

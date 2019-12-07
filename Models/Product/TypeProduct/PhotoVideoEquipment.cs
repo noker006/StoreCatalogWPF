@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct
 {
-    class PhotoVideoEquipment:Product
+    class PhotoVideoEquipment:GeneralProduct
     {
+        private string subtypeName;
+
+        public string SubtypeName
+        {
+            set
+            {
+                subtypeName = value;
+            }
+            get
+            {
+                return subtypeName;
+            }
+        }
 
         private string typeMatrix;
         public string TypeMatrix

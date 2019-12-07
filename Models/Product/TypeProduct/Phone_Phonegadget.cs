@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct
 {
-    class Phone_Phonegadget:Product
+    class Phone_Phonegadget:GeneralProduct
     {
+        private string subtypeName;
+
+        public string SubtypeName
+        {
+            set
+            {
+                subtypeName = value;
+            }
+            get
+            {
+                return subtypeName;
+            }
+        }
+
         private string oS;
         public string OS
         {

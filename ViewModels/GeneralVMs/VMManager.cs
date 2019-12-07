@@ -12,6 +12,7 @@ namespace StoreCatalogWPF.ViewModels.GeneralVMs
         public VMManager()
         {
             AddVM(new CatalogVM("CatalogVM", this));
+            AddVM(new AddProductVM("AddProductVM", this));
         }
 
         public object CurrentVM

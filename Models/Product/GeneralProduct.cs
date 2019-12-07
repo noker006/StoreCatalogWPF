@@ -9,22 +9,8 @@ using System.ComponentModel;
 
 namespace StoreCatalogWPF.Models.Product
 {
-    class Product
+    class GeneralProduct
     {
-        private double price;
-        public double Price
-        {
-            set
-            {
-                price = value;
-                OnPropertyChanged();
-            }
-            get
-            {
-                return price;
-            }
-        }
-
         private string producer;
         public string Producer
         {
@@ -50,6 +36,20 @@ namespace StoreCatalogWPF.Models.Product
             get
             {
                 return title;
+            }
+        }
+
+        private double price;
+        public double Price
+        {
+            set
+            {
+                price = value;
+                OnPropertyChanged();
+            }
+            get
+            {
+                return price;
             }
         }
 
