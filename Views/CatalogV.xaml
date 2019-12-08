@@ -67,7 +67,7 @@
                     <StackPanel>
                         <TextBlock Text="{Binding Producer, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock Text="{Binding Title, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Text="{Binding Price, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding Price, FallbackValue=Collapsed, StringFormat={}{0:C}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock Text="{Binding Capasity, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock Text="{Binding UpperFrequencyRange, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock Text="{Binding DownFrequencyRange, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
@@ -93,11 +93,14 @@
                     <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox Text=""/>
-                <TextBox/>
+                <TextBox Grid.Column="0" Text="{Binding MinPrice , Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Column="1" Text="{Binding MaxPrice, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
+            <TextBlock Text="Producer"/>
+            <ComboBox Grid.Column="0"  />
         </StackPanel>
         <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}"/>
-        <Button Grid.Column="0" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="28,0,22.4,9.6" Command="{Binding GoTo}" CommandParameter="AddProductVM" />
+        <Button Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100" Margin="24,0,26.4,9.6"  />
+        <Button Grid.Column="1" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="22.6,0,227.8,6.6" Command="{Binding GoTo}" CommandParameter="AddProductVM" />
     </Grid>
 </UserControl>

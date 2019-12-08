@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace StoreCatalogWPF.Models.Product
 {
-    class GeneralProduct
+    class GeneralProduct:ICloneable
     {
         private string producer;
         public string Producer
@@ -65,6 +65,11 @@ namespace StoreCatalogWPF.Models.Product
             {
                 return phoneNumber;
             }
+        }
+
+        public virtual object  Clone()
+        {
+           return MemberwiseClone();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

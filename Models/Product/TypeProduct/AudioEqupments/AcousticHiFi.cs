@@ -23,5 +23,6 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
                 return sensitivity;
             }
         }
+
     }
 }

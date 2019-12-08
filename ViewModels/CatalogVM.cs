@@ -9,7 +9,7 @@ using System.Windows;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using StoreCatalogWPF.ViewModels.GeneralVMs;
-using StoreCatalogWPF.Models.Product.TypeProduct;
+using StoreCatalogWPF.Models.Product;
 using StoreCatalogWPF.Models;
 
 
@@ -48,11 +48,15 @@ namespace StoreCatalogWPF.ViewModels
         private object actualSelectedProduct;
 
 
-        private ObservableCollection<object> actualListProducts;
 
+        private string minPrice;
+        private string maxPrice;
 
         public List<string>  TitlesTypeProduct { set; get; }
 
+        private ObservableCollection<object> actualListProducts;
+
+        private List<GeneralProduct> realListProducts;
 
         public Visibility VisibilityAudioEquipment
         {
@@ -138,6 +142,7 @@ namespace StoreCatalogWPF.ViewModels
             {
                 selectedAudioEquipment = value;
                 ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedAudioEquipment));
+                RealListProducts=new List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
                 OnPropertyChanged("SelectedAudioEquipment");
             }
             get
@@ -152,6 +157,7 @@ namespace StoreCatalogWPF.ViewModels
             {
                 selectedPhone_Phonegadget = value;
                 ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedPhone_Phonegadget));
+                RealListProducts= new List<GeneralProduct>(catalog.GetRequiredList(selectedPhone_Phonegadget));
                 OnPropertyChanged("SelectedPhone_Phonegadget");
             }
             get
@@ -166,6 +172,7 @@ namespace StoreCatalogWPF.ViewModels
             {
                 selectedPhotoVideoEquipment = value;
                 ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedPhotoVideoEquipment));
+                RealListProducts=new  List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
                 OnPropertyChanged("SelectedPhotoVideoEquipment");
             }
             get
@@ -207,18 +214,70 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        private double minPrise;
-        private double MinPrise
+        public List<GeneralProduct> RealListProducts
         {
             set
             {
-                minPrise = value;
+                realListProducts = value;
+                OnPropertyChanged("RealListProducts");
             }
             get
             {
-                return minPrise;
+                return realListProducts;
             }
         }
+
+        public string MinPrice
+        {
+            set
+            {
+                minPrice = value;
+                if (minPrice != "")
+                {
+                    catalog.MinPrice = Convert.ToDouble(minPrice);
+                    ActualListProducts = new ObservableCollection<object>(catalog.PriceSort(RealListProducts));
+                }
+                OnPropertyChanged("MinPrice");
+            }
+            get
+            {
+                return minPrice;
+            }
+        }
+
+        public string MaxPrice
+        {
+            set
+            {
+                maxPrice = value;
+                if (maxPrice != "")
+                {
+                    catalog.MaxPrice = Convert.ToDouble(maxPrice);
+                    ActualListProducts = new ObservableCollection<object>(catalog.PriceSort(RealListProducts));
+                }
+                OnPropertyChanged("MaxPrice");
+            }
+            get
+            {
+                return maxPrice;
+            }
+        }
+
+        //private RelayCommand sorting;
+
+        //public RelayCommand Sorting
+        //{
+        //    get
+        //    {
+        //        return sorting ??
+        //            (sorting = new RelayCommand(obj =>
+        //            {
+
+        //            }));
+
+        //    }
+        //}
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

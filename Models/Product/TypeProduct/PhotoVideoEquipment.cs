@@ -62,5 +62,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
                 return resolution;
             }
         }
+
+
     }
 }

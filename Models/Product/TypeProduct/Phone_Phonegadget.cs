@@ -48,7 +48,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        
+
 
     }
 }

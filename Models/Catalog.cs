@@ -10,6 +10,8 @@ using StoreCatalogWPF.Models.Product.TypeProduct;
 using StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments;
 using StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets;
 using StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments;
+using StoreCatalogWPF.Comparers;
+using StoreCatalogWPF.RelCommand;
 
 namespace StoreCatalogWPF.Models
 {
@@ -19,6 +21,7 @@ namespace StoreCatalogWPF.Models
         {
             allProducts = new List<GeneralProduct>
             {
+                new AcousticHiFi{Title="TUrboAcoustic", Price=15,Capasity=30, Producer="Sven",UpperFrequencyRange=1000,DownFrequencyRange=43,Sensitivity=123},
                 new AcousticHiFi{Title="TUrboAcoustic", Price=10,Capasity=30, Producer="Sven",UpperFrequencyRange=1000,DownFrequencyRange=43,Sensitivity=123},
                 new AcousticHiFi{Title="GiperAcoustic", Price=20,Capasity=42, Producer="Sumsung",UpperFrequencyRange=1000,DownFrequencyRange=43},
                 new PhotoCamera{ Title="TUrboCamera", Price=20,Producer="Nikon", Resolution="12X234", TypeOfCamera="mirror" },
@@ -48,6 +51,8 @@ namespace StoreCatalogWPF.Models
         {
             //throw new NotImplementedException();
         }
+
+        public GeneralProduct generalProduct;
 
         private double minPrice;
 
@@ -79,6 +84,16 @@ namespace StoreCatalogWPF.Models
 
         public List<object> NewProduct;
 
+        private List<GeneralProduct> CloningRealListProducts(List<GeneralProduct> RealListProducts)
+        {
+            List<GeneralProduct> CloneRealListProducts=new List<GeneralProduct>();
+            for (int i = 0; i < RealListProducts.Count; i++)
+            {
+                CloneRealListProducts.Add((GeneralProduct)RealListProducts[i].Clone());
+            }
+            return CloneRealListProducts;
+        }
+
        public List<GeneralProduct> GetRequiredList(object NeededTypeList)
        {
             List<GeneralProduct> RequiredProducts = new List<GeneralProduct>();
@@ -91,12 +106,31 @@ namespace StoreCatalogWPF.Models
             }
             return RequiredProducts;
        }
-        //public List<GeneralProduct> PriceSort(List<GeneralProduct> Cure )
+        public List<GeneralProduct> PriceSort(List<GeneralProduct> RealListProducts)
+        {
+            if (maxPrice > 0 && minPrice > 0)
+            {
+                List<GeneralProduct> CloneRealListProducts = CloningRealListProducts(RealListProducts);
+                PriceComparer priceComparer = new PriceComparer();
+                for (int i = 0; i < CloneRealListProducts.Count; i++)
+                {
+                    if (CloneRealListProducts[i].Price > maxPrice || CloneRealListProducts[i].Price < minPrice)
+                    {
+                        CloneRealListProducts.Remove(CloneRealListProducts[i]);
+                        i--;
+                    }
+                }
+                CloneRealListProducts.Sort(priceComparer);
+                return CloneRealListProducts;
+            }
+            return RealListProducts;
+        }
+
+        //public List<GeneralProduct> GeneralSort(List<GeneralProduct> RealListProducts)
         //{
+        //    PriceSort(RealListProducts);
 
         //}
-
-
 
 
 
