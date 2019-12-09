@@ -17,6 +17,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             set
             {
                 subtypeName = value;
+                OnPropertyChanged("SubtypeName");
             }
             get
             {
@@ -30,6 +31,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             set
             {
                 capacity = value;
+                OnPropertyChanged("Capasity");
             }
             get
             {
@@ -44,6 +46,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             set
             {
                 upperFrequencyRange = value;
+                OnPropertyChanged("UpperFrequencyRange");
             }
             get
             {
@@ -58,6 +61,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             set
             {
                 downFrequencyRange = value;
+                OnPropertyChanged("DownFrequencyRange");
             }
             get
             {

@@ -11,6 +11,7 @@ using System.Collections.Specialized;
 using StoreCatalogWPF.ViewModels.GeneralVMs;
 using StoreCatalogWPF.Models.Product;
 using StoreCatalogWPF.Models;
+using StoreCatalogWPF.RelCommand;
 
 
 namespace StoreCatalogWPF.ViewModels
@@ -263,6 +264,7 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
+
         //private RelayCommand sorting;
 
         //public RelayCommand Sorting
@@ -278,13 +280,5 @@ namespace StoreCatalogWPF.ViewModels
         //    }
         //}
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName]string prop ="")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
     }
 }

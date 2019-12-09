@@ -1,11 +1,12 @@
-﻿
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using StoreCatalogWPF.RelCommand;
 
 namespace StoreCatalogWPF.ViewModels.GeneralVMs
 {
-    class ViewModel
+    class ViewModel : INotifyPropertyChanged
     {
-        protected RelayCommand _command;
+        private RelayCommand _command;
         public string Name { set; get; }
         public VMManager Root { set; get; }
 
@@ -26,6 +27,14 @@ namespace StoreCatalogWPF.ViewModels.GeneralVMs
                         Root.GoToWindow(needOpen);
                     }));
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

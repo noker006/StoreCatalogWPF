@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using StoreCatalogWPF.ViewModels.GeneralVMs;
 using System.ComponentModel;
 using StoreCatalogWPF.Models;
+using StoreCatalogWPF.RelCommand;
+using StoreCatalogWPF.Models.Product;
 
 namespace StoreCatalogWPF.ViewModels
 {
-    class AddProductVM : ViewModel,INotifyPropertyChanged
+    class AddProductVM : ViewModel
     {
         public AddProductVM(string name, VMManager root) : base(name, root)
         {
@@ -24,6 +26,7 @@ namespace StoreCatalogWPF.ViewModels
         }
         private Catalog catalog;
 
+        private object actualSelectedProduct;
 
         private string selectedTypeProduct;
         private object selectedAudioEquipment;
@@ -126,6 +129,7 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 selectedAudioEquipment = value;
+                ActualSelectedProduct = selectedAudioEquipment;
                 OnPropertyChanged("SelectedAudioEquipment");
             }
             get
@@ -139,6 +143,7 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 selectedPhone_Phonegadget = value;
+                ActualSelectedProduct = selectedPhone_Phonegadget;
                 OnPropertyChanged("SelectedPhone_Phonegadget");
             }
             get
@@ -152,6 +157,7 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 selectedPhotoVideoEquipment = value;
+                ActualSelectedProduct = selectedPhotoVideoEquipment;
                 OnPropertyChanged("SelectedPhotoVideoEquipment");
             }
             get
@@ -160,14 +166,31 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        public object ActualSelectedProduct
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            set
+            {
+                actualSelectedProduct = value;
+                OnPropertyChanged("ActualSelectedProduct");
+            }
+            get
+            {
+                return actualSelectedProduct;
+            }
         }
+
+        private RelayCommand save;
+        public RelayCommand Save
+        {
+            get
+            {
+                return save ??
+                  (save = new RelayCommand(obj =>
+                  {
+                      catalog.allProducts.Add((GeneralProduct)ActualSelectedProduct);
+                  }));
+            }
+        }
+
     }
 }

@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace StoreCatalogWPF.Models.Product
 {
-    class GeneralProduct:ICloneable
+    class GeneralProduct:ICloneable,INotifyPropertyChanged
     {
         private string producer;
         public string Producer
@@ -17,7 +17,7 @@ namespace StoreCatalogWPF.Models.Product
             set
             {
                 producer = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Producer");
             }
             get
             {
@@ -31,7 +31,7 @@ namespace StoreCatalogWPF.Models.Product
             set
             {
                 title = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Title");
             }
             get
             {
@@ -45,7 +45,7 @@ namespace StoreCatalogWPF.Models.Product
             set
             {
                 price = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Prise");
             }
             get
             {
@@ -59,7 +59,7 @@ namespace StoreCatalogWPF.Models.Product
             set
             {
                 phoneNumber = value;
-                OnPropertyChanged();
+                OnPropertyChanged("PhoneNumber");
             }
             get
             {

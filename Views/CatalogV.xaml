@@ -100,7 +100,8 @@
             <ComboBox Grid.Column="0"  />
         </StackPanel>
         <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}"/>
-        <Button Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100" Margin="24,0,26.4,9.6"  />
-        <Button Grid.Column="1" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="22.6,0,227.8,6.6" Command="{Binding GoTo}" CommandParameter="AddProductVM" />
+        
+        <Button Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100" Margin="24,0,26.4,9.6" Command="{Binding Save}" />
+        <Button Content="Add" Grid.Column="1" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="22.6,0,227.8,6.6" Command="{Binding GoTo}" CommandParameter="AddProductVM" />
     </Grid>
 </UserControl>

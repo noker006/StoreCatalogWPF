@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StoreCatalogWPF.Models.Product.TypeProduct;
+using StoreCatalogWPF.RelCommand;
 
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
@@ -16,13 +17,14 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
             set
             {
                 sensitivity = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Sensitivity");
             }
             get
             {
                 return sensitivity;
             }
         }
+
 
     }
 }

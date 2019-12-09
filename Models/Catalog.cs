@@ -80,7 +80,7 @@ namespace StoreCatalogWPF.Models
         public List<Phone_Phonegadget> AllSubtypesPhone_Phonegadget;
         public List<PhotoVideoEquipment> AllSubtypesPhotoVideoEquipment;
 
-        private List<GeneralProduct> allProducts = new List<GeneralProduct>();
+        public List<GeneralProduct> allProducts = new List<GeneralProduct>();
 
         public List<object> NewProduct;
 

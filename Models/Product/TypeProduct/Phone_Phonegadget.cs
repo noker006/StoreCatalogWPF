@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct
 {
@@ -15,6 +17,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             set
             {
                 subtypeName = value;
+                OnPropertyChanged("SubtypeName");
             }
             get
             {
@@ -28,6 +31,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             set
             {
                 oS = value;
+                OnPropertyChanged("OS");
             }
             get
             {
@@ -41,6 +45,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             set
             {
                 batteryCapacity = value;
+                OnPropertyChanged("BatteryCapacity");
             }
             get
             {
