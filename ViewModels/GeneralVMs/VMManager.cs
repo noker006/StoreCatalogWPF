@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StoreCatalogWPF.ViewModels;
+using StoreCatalogWPF.Models;
 
 namespace StoreCatalogWPF.ViewModels.GeneralVMs
 {
     class VMManager:MainVM
     {
+        
         public VMManager()
-        {
+        {           
             AddVM(new CatalogVM("CatalogVM", this));
             AddVM(new AddProductVM("AddProductVM", this));
         }

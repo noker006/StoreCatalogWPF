@@ -79,7 +79,6 @@
             </ComboBox>
         </StackPanel>
         <StackPanel Grid.ColumnSpan="2"  Grid.Row="2">
-        
             <ContentPresenter Content="{Binding ActualSelectedProduct}" />
         </StackPanel>
         <Button Content="Save" Grid.Column="2" MinHeight="40" MaxHeight="35" Margin="23,-22,23,91.6" Grid.RowSpan="3" Command="{Binding Save}"/>

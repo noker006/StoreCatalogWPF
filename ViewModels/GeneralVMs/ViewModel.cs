@@ -1,11 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using StoreCatalogWPF.RelCommand;
+using StoreCatalogWPF.Models;
 
 namespace StoreCatalogWPF.ViewModels.GeneralVMs
 {
     class ViewModel : INotifyPropertyChanged
     {
+        public Catalog catalog=new Catalog();
+
         private RelayCommand _command;
         public string Name { set; get; }
         public VMManager Root { set; get; }

@@ -19,15 +19,8 @@ namespace StoreCatalogWPF.Models
     {
        public Catalog()
         {
-            allProducts = new List<GeneralProduct>
-            {
-                new AcousticHiFi{Title="TUrboAcoustic", Price=15,Capasity=30, Producer="Sven",UpperFrequencyRange=1000,DownFrequencyRange=43,Sensitivity=123},
-                new AcousticHiFi{Title="TUrboAcoustic", Price=10,Capasity=30, Producer="Sven",UpperFrequencyRange=1000,DownFrequencyRange=43,Sensitivity=123},
-                new AcousticHiFi{Title="GiperAcoustic", Price=20,Capasity=42, Producer="Sumsung",UpperFrequencyRange=1000,DownFrequencyRange=43},
-                new PhotoCamera{ Title="TUrboCamera", Price=20,Producer="Nikon", Resolution="12X234", TypeOfCamera="mirror" },
-                new PhotoCamera{Title="GiperCamera", Price=30, Producer="ZarYA", Resolution="12X234", TypeOfCamera="mirror" }
+            allProducts = new List<GeneralProduct>();
 
-            };
             AllSubtypesAudioEquipment = new List<AudioEquipment>
             {
                 new AcousticHiFi {SubtypeName="HiFiAcoustic"},
@@ -80,7 +73,7 @@ namespace StoreCatalogWPF.Models
         public List<Phone_Phonegadget> AllSubtypesPhone_Phonegadget;
         public List<PhotoVideoEquipment> AllSubtypesPhotoVideoEquipment;
 
-        public List<GeneralProduct> allProducts = new List<GeneralProduct>();
+        private List<GeneralProduct> allProducts;
 
         public List<object> NewProduct;
 
@@ -124,6 +117,11 @@ namespace StoreCatalogWPF.Models
                 return CloneRealListProducts;
             }
             return RealListProducts;
+        }
+
+        public void AddProduct(GeneralProduct product)
+        {
+            allProducts.Add(product);
         }
 
         //public List<GeneralProduct> GeneralSort(List<GeneralProduct> RealListProducts)

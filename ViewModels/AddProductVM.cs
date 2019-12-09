@@ -24,14 +24,13 @@ namespace StoreCatalogWPF.ViewModels
             Phones_Phonegadgets = new List<object>(catalog.AllSubtypesPhone_Phonegadget);
             PhotoVideoEquipments = new List<object>(catalog.AllSubtypesPhotoVideoEquipment);
         }
-        private Catalog catalog;
 
-        private object actualSelectedProduct;
+        private GeneralProduct actualSelectedProduct;
 
         private string selectedTypeProduct;
-        private object selectedAudioEquipment;
-        private object selectedPhone_Phonegadget;
-        private object selectedPhotoVideoEquipment;
+        private GeneralProduct selectedAudioEquipment;
+        private GeneralProduct selectedPhone_Phonegadget;
+        private GeneralProduct selectedPhotoVideoEquipment;
 
 
         private Visibility visibilityAudioEquipment;
@@ -124,7 +123,7 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public object SelectedAudioEquipment
+        public GeneralProduct SelectedAudioEquipment
         {
             set
             {
@@ -138,7 +137,7 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public object SelectedPhone_Phonegadget
+        public GeneralProduct SelectedPhone_Phonegadget
         {
             set
             {
@@ -152,7 +151,7 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public object SelectedPhotoVideoEquipment
+        public GeneralProduct SelectedPhotoVideoEquipment
         {
             set
             {
@@ -166,7 +165,7 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public object ActualSelectedProduct
+        public GeneralProduct ActualSelectedProduct
         {
             set
             {
@@ -187,7 +186,7 @@ namespace StoreCatalogWPF.ViewModels
                 return save ??
                   (save = new RelayCommand(obj =>
                   {
-                      catalog.allProducts.Add((GeneralProduct)ActualSelectedProduct);
+                      catalog.AddProduct(ActualSelectedProduct);
                   }));
             }
         }

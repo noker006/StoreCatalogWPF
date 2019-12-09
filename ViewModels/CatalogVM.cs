@@ -16,11 +16,10 @@ using StoreCatalogWPF.RelCommand;
 
 namespace StoreCatalogWPF.ViewModels
 {
-    class CatalogVM : ViewModel, INotifyPropertyChanged
+    class CatalogVM : ViewModel
     {
         public CatalogVM(string name,VMManager root):base(name,root)
         {
-            catalog = new Catalog();
             TitlesTypeProduct = new List<string> { "AudioEqupments", "Phone and gadgets", "Photo-Video Equpments" };
             AudioEquipments = new List<object>(catalog.AllSubtypesAudioEquipment);
             Phones_Phonegadgets = new List<object>(catalog.AllSubtypesPhone_Phonegadget);
@@ -29,11 +28,6 @@ namespace StoreCatalogWPF.ViewModels
             visibilityPhone_Phonegadget = Visibility.Collapsed;
             visibilityPhotoVideoEquipment = Visibility.Collapsed;
         }
-
-        private Catalog catalog;
-
-        
-
 
         private string selectedTypeProduct;
         private object selectedAudioEquipment;
@@ -264,21 +258,18 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-
-        //private RelayCommand sorting;
-
-        //public RelayCommand Sorting
-        //{
-        //    get
-        //    {
-        //        return sorting ??
-        //            (sorting = new RelayCommand(obj =>
-        //            {
-
-        //            }));
-
-        //    }
-        //}
+        private RelayCommand sort;
+        public RelayCommand Sort
+        {
+            get
+            {
+                return sort ??
+                  (sort = new RelayCommand(obj =>
+                  {
+                      
+                  }));
+            }
+        }
 
     }
 }
