@@ -12,16 +12,52 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Orange">
     <UserControl.Resources>
+        
         <DataTemplate DataType="{x:Type AudioEqupment:AcousticHiFi}">
             <StackPanel>
                 <TextBlock Text="Sensitivity"/>
                 <TextBox Text="{Binding Sensitivity}"/>
+                <TextBlock Text="DownFrequencyRange"/>
+                <TextBox Text="{Binding DownFrequencyRange}"/>
+                <TextBlock Text="UpperFrequencyRange"/>
+                <TextBox Text="{Binding UpperFrequencyRange}"/>
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate DataType="{x:Type AudioEqupment:MusicCentre}">
             <StackPanel>
-                <TextBlock Text="Sensitivity"/>
+                <TextBlock Text="AmountEqualizerMode"/>
                 <TextBox Text="{Binding AmountEqualizerMode}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type AudioEqupment:WirelessSpeaker}">
+            <StackPanel>
+                <TextBlock Text="BattteryCapacity"/>
+                <TextBox Text="{Binding BattteryCapacity}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Phone_gadget:Phone}">
+            <StackPanel>
+                <TextBlock Text="Processor"/>
+                <TextBox Text="{Binding Processor}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Phone_gadget:SmartWatch}">
+            <StackPanel>
+                <TextBlock Text="TypeSmartWatch"/>
+                <TextBox Text="{Binding TypeSmartWatch}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type PhotoVideoEquipment:PhotoCamera}">
+            <StackPanel>
+                <TextBlock Text="TypeOfCamera"/>
+                <TextBox Text="{Binding TypeOfCamera}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type PhotoVideoEquipment:VideoCamera}">
+            <StackPanel>
+                <TextBlock Text="VideoCompressionFormat"/>
+                <TextBox Text="{Binding VideoCompressionFormat}"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
@@ -97,10 +133,11 @@
                 <TextBox Grid.Column="1" Text="{Binding MaxPrice, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
             <TextBlock Text="Producer"/>
-            <ComboBox Grid.Column="0"  />
+            <ComboBox Grid.Column="0" ItemsSource="{Binding ProducerList}" SelectedItem="{Binding SelectedProducer}"/>
         </StackPanel>
         <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}"/>
+        <Button Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100" Margin="199.6,0,50.8,6.6"  Command="{Binding Delete}" Content="Delete"/>
         <Button Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100" Margin="24,0,26.4,9.6" Command="{Binding Sort}" Content="Sort"/>
-        <Button Content="Add" Grid.Column="1" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="22.6,0,227.8,6.6" Command="{Binding GoTo}" CommandParameter="AddProductVM" />
+        <Button Content="Add" Grid.Column="1" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="22.6,0,227.8,6.6" Command="{Binding Next}" CommandParameter="AddProductVM" />
     </Grid>
 </UserControl>

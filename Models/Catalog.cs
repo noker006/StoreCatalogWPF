@@ -12,6 +12,8 @@ using StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets;
 using StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments;
 using StoreCatalogWPF.Comparers;
 using StoreCatalogWPF.RelCommand;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace StoreCatalogWPF.Models
 {
@@ -19,13 +21,13 @@ namespace StoreCatalogWPF.Models
     {
        public Catalog()
         {
-            allProducts = new List<GeneralProduct>();
-
+            Products = new List<GeneralProduct>();
+            StartDeserialization();
             AllSubtypesAudioEquipment = new List<AudioEquipment>
             {
                 new AcousticHiFi {SubtypeName="HiFiAcoustic"},
                 new MusicCentre{SubtypeName="MusicCentre"},
-                new Radio{SubtypeName="Radio"}
+                new WirelessSpeaker{SubtypeName="WirelessSpeaker"}
             };
             AllSubtypesPhone_Phonegadget = new List<Phone_Phonegadget>
             {
@@ -37,17 +39,28 @@ namespace StoreCatalogWPF.Models
                 new PhotoCamera{SubtypeName="PhotoCamera"},
                 new VideoCamera{SubtypeName="VideoCamera"}
             };
-            System.Windows.Application.Current.Exit += Current_Exit;
+            System.Windows.Application.Current.Exit += ExitSerialization;
         }
 
-        private void Current_Exit(object sender, System.Windows.ExitEventArgs e)
+        private void ExitSerialization(object sender, System.Windows.ExitEventArgs e)
         {
-            //throw new NotImplementedException();
+            var formatter = new BinaryFormatter();
+            using (FileStream stream = File.Create("Catalog.bin"))
+            {
+                formatter.Serialize(stream,Products);
+            }
         }
 
-        public GeneralProduct generalProduct;
-
+        private void StartDeserialization()
+        {
+            var formatter = new BinaryFormatter();
+            using (FileStream stream = File.OpenRead("Catalog.bin"))
+            {
+                Products = (List<GeneralProduct>)formatter.Deserialize(stream);
+            }
+        }
         private double minPrice;
+        private double maxPrice;
 
         public double MinPrice
         {
@@ -57,9 +70,6 @@ namespace StoreCatalogWPF.Models
             }
             get => minPrice;
         }
-
-        private double maxPrice;
-
         public double MaxPrice
         {
             set
@@ -69,13 +79,34 @@ namespace StoreCatalogWPF.Models
             get => maxPrice;
         }
 
+        public string RequiredProducer;
+
         public List<AudioEquipment> AllSubtypesAudioEquipment;
         public List<Phone_Phonegadget> AllSubtypesPhone_Phonegadget;
         public List<PhotoVideoEquipment> AllSubtypesPhotoVideoEquipment;
+        private List<GeneralProduct> Products;
 
-        private List<GeneralProduct> allProducts;
-
-        public List<object> NewProduct;
+        
+        public List<string> CreateListProducer(List<GeneralProduct> products)
+        {
+            List<string> producers = new List<string>();
+            for (int i = 0; i < products.Count; i++)
+            {
+                producers.Add(products[i].Producer);
+            }
+            for (int i = 0; i < producers.Count - 1; i++)
+            {
+                for (int j = 0; j < producers.Count - i - 1; j++)
+                {
+                    if (producers[j + 1] == producers[j])
+                    {
+                        producers.Remove((string)producers[j+1]);
+                        j--;
+                    }
+                }
+            }
+            return producers;
+        }
 
         private List<GeneralProduct> CloningRealListProducts(List<GeneralProduct> RealListProducts)
         {
@@ -87,23 +118,22 @@ namespace StoreCatalogWPF.Models
             return CloneRealListProducts;
         }
 
-       public List<GeneralProduct> GetRequiredList(object NeededTypeList)
+        public List<GeneralProduct> GetRequiredList(object NeededTypeList)
        {
             List<GeneralProduct> RequiredProducts = new List<GeneralProduct>();
-            for (int i = 0; i < allProducts.Count; i++)
+            for (int i = 0; i < Products.Count; i++)
             {
-                if (NeededTypeList.GetType() == allProducts[i].GetType())
+                if (NeededTypeList.GetType() == Products[i].GetType())
                 {
-                    RequiredProducts.Add(allProducts[i]);
+                    RequiredProducts.Add(Products[i]);
                 }
             }
             return RequiredProducts;
        }
-        public List<GeneralProduct> PriceSort(List<GeneralProduct> RealListProducts)
+        public List<GeneralProduct> PriceSort(List<GeneralProduct> CloneRealListProducts)
         {
             if (maxPrice > 0 && minPrice > 0)
             {
-                List<GeneralProduct> CloneRealListProducts = CloningRealListProducts(RealListProducts);
                 PriceComparer priceComparer = new PriceComparer();
                 for (int i = 0; i < CloneRealListProducts.Count; i++)
                 {
@@ -116,21 +146,84 @@ namespace StoreCatalogWPF.Models
                 CloneRealListProducts.Sort(priceComparer);
                 return CloneRealListProducts;
             }
-            return RealListProducts;
+            return CloneRealListProducts;
         }
-
+        private List<GeneralProduct> ProduProducerSort(List<GeneralProduct> CloneRealListProducts)
+        {
+            for (int i = 0; i < CloneRealListProducts.Count; i++)
+            {
+                if(CloneRealListProducts[i].Producer != RequiredProducer)
+                {
+                    CloneRealListProducts.Remove(CloneRealListProducts[i]);
+                    i--;
+                }
+            }
+            return CloneRealListProducts;
+        }
+        public List<GeneralProduct> GeneralSort(List<GeneralProduct> RealListProducts)
+        {
+            List<GeneralProduct> CloneRealListProducts = CloningRealListProducts(RealListProducts);
+            PriceSort(CloneRealListProducts);
+            ProduProducerSort(CloneRealListProducts);
+            return CloneRealListProducts;
+        }
         public void AddProduct(GeneralProduct product)
         {
-            allProducts.Add(product);
+
+            Products.Add(product);
         }
 
-        //public List<GeneralProduct> GeneralSort(List<GeneralProduct> RealListProducts)
-        //{
-        //    PriceSort(RealListProducts);
+        public GeneralProduct CreateNewObject(GeneralProduct TypeProduct)
+        {
+            Type type = TypeProduct.GetType();
+            switch (type.Name.ToString())
+            {
+                case "AcousticHiFi":
+                    {
+                        return new AcousticHiFi();
+                    }
+                case "MusicCentre":
+                    {
+                        return new MusicCentre();
+                    }
+                case "Radio":
+                    {
+                        return new WirelessSpeaker();
+                    }
+                case "Phone":
+                    {
+                        return new Phone();
+                    }
+                case "SmartWatch":
+                    {
+                        return new SmartWatch();
+                    }
+                case "PhotoCamera":
+                    {
+                        return new PhotoCamera();
+                    }
+                case "VideoCamera":
+                    {
+                        return new VideoCamera();
+                    }
+                default:
+                    {
+                        return null;
+                    }
+            }
+        }
 
-        //}
-
-
+        public void DeleteProduct(GeneralProduct DeletedProduct)
+        {
+            for (int i = 0; i < Products.Count; i++)
+            {
+                if (Products[i] == DeletedProduct)
+                {
+                    Products.Remove(Products[i]);
+                    i--;
+                }
+            }
+        }
 
 
 

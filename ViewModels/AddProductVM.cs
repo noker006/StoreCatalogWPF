@@ -14,15 +14,17 @@ using StoreCatalogWPF.Models.Product;
 
 namespace StoreCatalogWPF.ViewModels
 {
-    class AddProductVM : ViewModel
+    class AddProductVM:BasicVM
     {
-        public AddProductVM(string name, VMManager root) : base(name, root)
+        public AddProductVM(string name,VMManager root) :base(name,root)
         {
-            catalog = new Catalog();
             TitlesTypeProduct = new List<string> { "AudioEqupments", "Phone and gadgets", "Photo-Video Equpments" };
             AudioEquipments = new List<object>(catalog.AllSubtypesAudioEquipment);
             Phones_Phonegadgets = new List<object>(catalog.AllSubtypesPhone_Phonegadget);
             PhotoVideoEquipments = new List<object>(catalog.AllSubtypesPhotoVideoEquipment);
+            visibilityAudioEquipment = Visibility.Collapsed;
+            visibilityPhone_Phonegadget = Visibility.Collapsed;
+            visibilityPhotoVideoEquipment = Visibility.Collapsed;
         }
 
         private GeneralProduct actualSelectedProduct;
@@ -83,7 +85,10 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-
+        private void AddMessage()
+        {
+            MessageBoxResult add = MessageBox.Show("Product Added");
+        }
         public string SelectedTypeProduct
         {
             set
@@ -169,7 +174,7 @@ namespace StoreCatalogWPF.ViewModels
         {
             set
             {
-                actualSelectedProduct = value;
+                actualSelectedProduct = catalog.CreateNewObject(value);
                 OnPropertyChanged("ActualSelectedProduct");
             }
             get
@@ -185,8 +190,10 @@ namespace StoreCatalogWPF.ViewModels
             {
                 return save ??
                   (save = new RelayCommand(obj =>
-                  {
+                  {                      
                       catalog.AddProduct(ActualSelectedProduct);
+                      ActualSelectedProduct = catalog.CreateNewObject(ActualSelectedProduct);
+                      AddMessage();
                   }));
             }
         }

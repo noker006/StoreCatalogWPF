@@ -7,6 +7,7 @@ using StoreCatalogWPF.Models.Product;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct
 {
+    [Serializable]
     class AudioEquipment:GeneralProduct
     {
 

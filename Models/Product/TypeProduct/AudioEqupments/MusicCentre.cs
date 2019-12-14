@@ -7,6 +7,7 @@ using StoreCatalogWPF.Models.Product.TypeProduct;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
 {
+    [Serializable]
     class MusicCentre:AudioEquipment
     {
         private int amountEqualizerMode;

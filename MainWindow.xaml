@@ -17,6 +17,6 @@
         </DataTemplate>
     </Window.Resources>
     <Grid>
-      <ContentControl Content="{Binding CurrentVM}"/>
+        <ContentControl Content="{Binding CurrentVM}"/>
     </Grid>
 </Window>

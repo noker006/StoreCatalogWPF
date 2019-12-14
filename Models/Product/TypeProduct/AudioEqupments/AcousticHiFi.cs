@@ -9,6 +9,7 @@ using StoreCatalogWPF.RelCommand;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
 {
+    [Serializable]
     class AcousticHiFi:AudioEquipment
     {
         private int sensitivity;

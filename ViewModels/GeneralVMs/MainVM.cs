@@ -8,36 +8,36 @@ using System.Runtime.CompilerServices;
 
 namespace StoreCatalogWPF.ViewModels.GeneralVMs
 {
-    abstract class MainVM:INotifyPropertyChanged 
+    abstract class MainVM : INotifyPropertyChanged
     {
-        protected object _currentVM;
-        protected List<ViewModel> _viewModels;
+        protected object currentVM;
+        protected List<BasicVM> viewModels;
 
         public MainVM()
         {
-            _viewModels = new List<ViewModel>();
+            viewModels = new List<BasicVM>();
         }
 
-        public void GoToWindow(string NeedSuchViewModel)
+        public void NextWindow(string NeedSuchViewModel)
         {
-            for (int i = 0; i < _viewModels.Count; i++)
+            for (int i = 0; i < viewModels.Count; i++)
             {
-                if (_viewModels[i].Name == NeedSuchViewModel)
+                if (viewModels[i].Name == NeedSuchViewModel)
                 {
-                    _currentVM = _viewModels[i];
+                    currentVM = viewModels[i];
                     break;
                 }
                 else
-                    _currentVM = this;
+                    currentVM = this;
             }
             OnPropertyChanged("CurrentVM");
         }
 
-        public void AddVM(ViewModel newVM)
+        public void AddVM(BasicVM newVM)
         {
-            if (_viewModels == null)
-                _viewModels = new List<ViewModel>();
-            _viewModels.Add(newVM);
+            if (viewModels == null)
+                viewModels = new List<BasicVM>();
+            viewModels.Add(newVM);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

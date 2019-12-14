@@ -9,6 +9,7 @@ using System.ComponentModel;
 
 namespace StoreCatalogWPF.Models.Product
 {
+    [Serializable]
     class GeneralProduct:ICloneable,INotifyPropertyChanged
     {
         private string producer;
@@ -71,7 +72,9 @@ namespace StoreCatalogWPF.Models.Product
         {
            return MemberwiseClone();
         }
-        
+
+        [field: NonSerialized]
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

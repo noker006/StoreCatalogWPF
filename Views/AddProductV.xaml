@@ -8,7 +8,7 @@
              xmlns:AudioEquipment ="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments"
              xmlns:Phone_Phonegadget ="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets"
              xmlns:PhotoVideoEquipment ="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Background="Orange">
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type AudioEquipment:AcousticHiFi}">
             <Grid>
@@ -38,7 +38,176 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
-
+        <DataTemplate DataType="{x:Type AudioEquipment:MusicCentre}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0,5*" />
+                    <ColumnDefinition Width="0,5*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Title"/>
+                    <TextBox Text="{Binding Title}"/>
+                    <TextBlock Text="Producer"/>
+                    <TextBox Text="{Binding Producer}"/>
+                    <TextBlock Text="Price"/>
+                    <TextBox Text="{Binding Price}"/>
+                    <TextBlock Text="Phone Storage"/>
+                    <TextBox Text="{Binding PhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Capasity"/>
+                    <TextBox Text="{Binding Capasity}"/>
+                    <TextBlock Text="UpperFrequencyRange"/>
+                    <TextBox Text="{Binding UpperFrequencyRange}"/>
+                    <TextBlock Text="DownFrequencyRange"/>
+                    <TextBox Text="{Binding DownFrequencyRange}"/>
+                    <TextBlock Text="AmountEqualizerMode"/>
+                    <TextBox Text="{Binding AmountEqualizerMode}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type AudioEquipment:WirelessSpeaker}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0,5*" />
+                    <ColumnDefinition Width="0,5*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Title"/>
+                    <TextBox Text="{Binding Title}"/>
+                    <TextBlock Text="Producer"/>
+                    <TextBox Text="{Binding Producer}"/>
+                    <TextBlock Text="Price"/>
+                    <TextBox Text="{Binding Price}"/>
+                    <TextBlock Text="Phone Storage"/>
+                    <TextBox Text="{Binding PhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Capasity"/>
+                    <TextBox Text="{Binding Capasity}"/>
+                    <TextBlock Text="UpperFrequencyRange"/>
+                    <TextBox Text="{Binding UpperFrequencyRange}"/>
+                    <TextBlock Text="DownFrequencyRange"/>
+                    <TextBox Text="{Binding DownFrequencyRange}"/>
+                    <TextBlock Text="BattteryCapacity"/>
+                    <TextBox Text="{Binding BattteryCapacity}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type PhotoVideoEquipment:PhotoCamera}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0,5*" />
+                <ColumnDefinition Width="0,5*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Title"/>
+                <TextBox Text="{Binding Title}"/>
+                <TextBlock Text="Producer"/>
+                <TextBox Text="{Binding Producer}"/>
+                <TextBlock Text="Price"/>
+                <TextBox Text="{Binding Price}"/>
+                    <TextBlock Text="PhoneNumber"/>
+                <TextBox Text="{Binding PhoneNumber}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                    <TextBlock Text="TypeMatrix"/>
+                <TextBox Text="{Binding TypeMatrix}"/>
+                    <TextBlock Text="MatrixSize"/>
+                <TextBox Text="{Binding MatrixSize}"/>
+                    <TextBlock Text="Resolution"/>
+                <TextBox Text="{Binding Resolution}"/>
+                    <TextBlock Text="TypeOfCamera"/>
+                <TextBox Text="{Binding TypeOfCamera}"/>
+                    <TextBlock Text="OpticalZoom"/>
+                <TextBox Text="{Binding OpticalZoom}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type PhotoVideoEquipment:VideoCamera}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0,5*" />
+                    <ColumnDefinition Width="0,5*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Title"/>
+                    <TextBox Text="{Binding Title}"/>
+                    <TextBlock Text="Producer"/>
+                    <TextBox Text="{Binding Producer}"/>
+                    <TextBlock Text="Price"/>
+                    <TextBox Text="{Binding Price}"/>
+                    <TextBlock Text="PhoneNumber"/>
+                    <TextBox Text="{Binding PhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="TypeMatrix"/>
+                    <TextBox Text="{Binding TypeMatrix}"/>
+                    <TextBlock Text="MatrixSize"/>
+                    <TextBox Text="{Binding MatrixSize}"/>
+                    <TextBlock Text="Resolution"/>
+                    <TextBox Text="{Binding Resolution}"/>
+                    <TextBlock Text="VideoCompressionFormat"/>
+                    <TextBox Text="{Binding VideoCompressionFormat}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Phone_Phonegadget:Phone}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0,5*" />
+                    <ColumnDefinition Width="0,5*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Title"/>
+                    <TextBox Text="{Binding Title}"/>
+                    <TextBlock Text="Producer"/>
+                    <TextBox Text="{Binding Producer}"/>
+                    <TextBlock Text="Price"/>
+                    <TextBox Text="{Binding Price}"/>
+                    <TextBlock Text="PhoneNumber"/>
+                    <TextBox Text="{Binding PhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="OS"/>
+                    <TextBox Text="{Binding OS}"/>
+                    <TextBlock Text="BatteryCapacity"/>
+                    <TextBox Text="{Binding BatteryCapacity}"/>
+                    <TextBlock Text="Processor"/>
+                    <TextBox Text="{Binding Processor}"/>
+                    <TextBlock Text="CpuClock"/>
+                    <TextBox Text="{Binding CpuClock}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type Phone_Phonegadget:SmartWatch}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0,5*" />
+                    <ColumnDefinition Width="0,5*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Title"/>
+                    <TextBox Text="{Binding Title}"/>
+                    <TextBlock Text="Producer"/>
+                    <TextBox Text="{Binding Producer}"/>
+                    <TextBlock Text="Price"/>
+                    <TextBox Text="{Binding Price}"/>
+                    <TextBlock Text="PhoneNumber"/>
+                    <TextBox Text="{Binding PhoneNumber}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="OS"/>
+                    <TextBox Text="{Binding OS}"/>
+                    <TextBlock Text="BatteryCapacity"/>
+                    <TextBox Text="{Binding BatteryCapacity}"/>
+                    <TextBlock Text="CapacityMusicPlayer"/>
+                    <TextBox Text="{Binding CapacityMusicPlayer}"/>
+                    <TextBlock Text="TypeSmartWatch"/>
+                    <TextBox Text="{Binding TypeSmartWatch}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
 
     </UserControl.Resources>
     <Grid>
@@ -82,6 +251,6 @@
             <ContentPresenter Content="{Binding ActualSelectedProduct}" />
         </StackPanel>
         <Button Content="Save" Grid.Column="2" MinHeight="40" MaxHeight="35" Margin="23,-22,23,91.6" Grid.RowSpan="3" Command="{Binding Save}"/>
-        <Button Content="Cansel" Grid.Column="2" MinHeight="40" MaxHeight="35" Margin="23,10,23,39.6" Grid.RowSpan="2" Command="{Binding GoTo}" CommandParameter="CatalogVM" Grid.Row="1" />
+        <Button Content="Cansel" Grid.Column="2" MinHeight="40" MaxHeight="35" Margin="23,10,23,39.6" Grid.RowSpan="2" Command="{Binding Next}" CommandParameter="CatalogVM" Grid.Row="1" />
     </Grid>
 </UserControl>

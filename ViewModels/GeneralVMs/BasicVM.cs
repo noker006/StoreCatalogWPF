@@ -2,36 +2,41 @@
 using System.Runtime.CompilerServices;
 using StoreCatalogWPF.RelCommand;
 using StoreCatalogWPF.Models;
+using StoreCatalogWPF.Models.Product;
+using System.Windows;
+using System;
+using System.Collections.Generic;
 
 namespace StoreCatalogWPF.ViewModels.GeneralVMs
 {
-    class ViewModel : INotifyPropertyChanged
+    class BasicVM : INotifyPropertyChanged
     {
-        public Catalog catalog=new Catalog();
+        public static Catalog catalog=new Catalog();
 
-        private RelayCommand _command;
+        private RelayCommand command;
         public string Name { set; get; }
         public VMManager Root { set; get; }
 
-        public ViewModel(string name, VMManager root)
+        public BasicVM(string name, VMManager root)
         {
             Name = name;
             Root = root;
         }
 
-        public object GoTo
+        public object Next
         {
             get
             {
-                return _command ??
-                    (_command = new RelayCommand(obj =>
+                return command ??
+                    (command = new RelayCommand(obj =>
                     {
                         string needOpen = obj as string;
-                        Root.GoToWindow(needOpen);
+                        Root.NextWindow(needOpen);
                     }));
             }
         }
 
+        [field:NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName]string prop = "")

@@ -8,6 +8,7 @@ using System.ComponentModel;
 
 namespace StoreCatalogWPF.Models.Product.TypeProduct
 {
+    [Serializable]
     class PhotoVideoEquipment:GeneralProduct
     {
         private string subtypeName;

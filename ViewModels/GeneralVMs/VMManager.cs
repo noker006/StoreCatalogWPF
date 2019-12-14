@@ -21,22 +21,22 @@ namespace StoreCatalogWPF.ViewModels.GeneralVMs
         {
             get
             {
-                if (_currentVM == null)
+                if (currentVM == null)
                 {
-                    _currentVM = _viewModels[0];
-                    CurrentVM = _currentVM;
+                    currentVM = viewModels[0];
+                    CurrentVM = currentVM;
                 }
 
-                if (_currentVM == this)
+                if (currentVM == this)
                 {
                     System.Windows.Application.Current.Shutdown();
                 }
 
-                return _currentVM;
+                return currentVM;
             }
             set
             {
-                _currentVM = value;
+                currentVM = value;
                 OnPropertyChanged("CurrentVM");
             }
         }

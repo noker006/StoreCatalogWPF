@@ -62,7 +62,7 @@
     <Compile Include="ViewModels\AddProductVM.cs" />
     <Compile Include="ViewModels\CatalogVM.cs" />
     <Compile Include="ViewModels\GeneralVMs\MainVM.cs" />
-    <Compile Include="ViewModels\GeneralVMs\ViewModel.cs" />
+    <Compile Include="ViewModels\GeneralVMs\BasicVM.cs" />
     <Compile Include="ViewModels\GeneralVMs\VMManager.cs" />
     <Compile Include="Views\AddProductV.xaml.cs">
       <DependentUpon>AddProductV.xaml</DependentUpon>
@@ -97,7 +97,7 @@
     <Compile Include="Models\Product\TypeProduct\AudioEquipment.cs" />
     <Compile Include="Models\Product\TypeProduct\AudioEqupments\AcousticHiFi.cs" />
     <Compile Include="Models\Product\TypeProduct\AudioEqupments\MusicCentre.cs" />
-    <Compile Include="Models\Product\TypeProduct\AudioEqupments\Radio.cs" />
+    <Compile Include="Models\Product\TypeProduct\AudioEqupments\WirelessSpeaker.cs" />
     <Compile Include="Models\Product\TypeProduct\Phone_Phonegadget.cs" />
     <Compile Include="Models\Product\TypeProduct\Phone_gadgets\Phone.cs" />
     <Compile Include="Models\Product\TypeProduct\Phone_gadgets\SmartWatch.cs" />

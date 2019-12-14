@@ -16,9 +16,9 @@ using StoreCatalogWPF.RelCommand;
 
 namespace StoreCatalogWPF.ViewModels
 {
-    class CatalogVM : ViewModel
+    class CatalogVM:BasicVM
     {
-        public CatalogVM(string name,VMManager root):base(name,root)
+        public CatalogVM(string name, VMManager root) : base(name, root)
         {
             TitlesTypeProduct = new List<string> { "AudioEqupments", "Phone and gadgets", "Photo-Video Equpments" };
             AudioEquipments = new List<object>(catalog.AllSubtypesAudioEquipment);
@@ -33,16 +33,14 @@ namespace StoreCatalogWPF.ViewModels
         private object selectedAudioEquipment;
         private object selectedPhone_Phonegadget;
         private object selectedPhotoVideoEquipment;
+        private string selectedProducer;
 
 
         private Visibility visibilityAudioEquipment;
         private Visibility visibilityPhone_Phonegadget;
         private Visibility visibilityPhotoVideoEquipment;
 
-
         private object actualSelectedProduct;
-
-
 
         private string minPrice;
         private string maxPrice;
@@ -52,6 +50,8 @@ namespace StoreCatalogWPF.ViewModels
         private ObservableCollection<object> actualListProducts;
 
         private List<GeneralProduct> realListProducts;
+
+        private List<string> producerList;
 
         public Visibility VisibilityAudioEquipment
         {
@@ -105,6 +105,7 @@ namespace StoreCatalogWPF.ViewModels
                             VisibilityPhone_Phonegadget = Visibility.Collapsed;
                             VisibilityPhotoVideoEquipment = Visibility.Collapsed;
                             VisibilityAudioEquipment = Visibility.Visible;
+
                             break;
                         }
                     case "Phone and gadgets":
@@ -138,6 +139,7 @@ namespace StoreCatalogWPF.ViewModels
                 selectedAudioEquipment = value;
                 ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedAudioEquipment));
                 RealListProducts=new List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
+                ProducerList = new List<string>(catalog.CreateListProducer(RealListProducts));
                 OnPropertyChanged("SelectedAudioEquipment");
             }
             get
@@ -153,6 +155,7 @@ namespace StoreCatalogWPF.ViewModels
                 selectedPhone_Phonegadget = value;
                 ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedPhone_Phonegadget));
                 RealListProducts= new List<GeneralProduct>(catalog.GetRequiredList(selectedPhone_Phonegadget));
+                ProducerList = new List<string>(catalog.CreateListProducer(RealListProducts));
                 OnPropertyChanged("SelectedPhone_Phonegadget");
             }
             get
@@ -168,6 +171,7 @@ namespace StoreCatalogWPF.ViewModels
                 selectedPhotoVideoEquipment = value;
                 ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(selectedPhotoVideoEquipment));
                 RealListProducts=new  List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
+                ProducerList = new List<string>(catalog.CreateListProducer(RealListProducts));
                 OnPropertyChanged("SelectedPhotoVideoEquipment");
             }
             get
@@ -175,8 +179,6 @@ namespace StoreCatalogWPF.ViewModels
                 return selectedPhotoVideoEquipment;
             }
         }
-
-
 
         public object ActualSelectedProduct
         {
@@ -191,11 +193,32 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-
+        public string SelectedProducer
+        {
+            set
+            {
+                selectedProducer = value;
+                catalog.RequiredProducer = selectedProducer;
+                OnPropertyChanged("SelecetdProducer");
+            }
+            get => selectedProducer;
+        }
         public List<object> AudioEquipments { set; get; }
         public List<object> Phones_Phonegadgets { set; get; }
         public List<object> PhotoVideoEquipments { set; get; }
 
+        public List<string> ProducerList
+        {
+            set
+            {
+                producerList = value;
+                OnPropertyChanged("ProducerList");
+            }
+            get
+            {
+                return producerList;
+            }
+        }
         public ObservableCollection<object> ActualListProducts
         {
             set
@@ -230,7 +253,6 @@ namespace StoreCatalogWPF.ViewModels
                 if (minPrice != "")
                 {
                     catalog.MinPrice = Convert.ToDouble(minPrice);
-                    ActualListProducts = new ObservableCollection<object>(catalog.PriceSort(RealListProducts));
                 }
                 OnPropertyChanged("MinPrice");
             }
@@ -239,7 +261,6 @@ namespace StoreCatalogWPF.ViewModels
                 return minPrice;
             }
         }
-
         public string MaxPrice
         {
             set
@@ -248,7 +269,6 @@ namespace StoreCatalogWPF.ViewModels
                 if (maxPrice != "")
                 {
                     catalog.MaxPrice = Convert.ToDouble(maxPrice);
-                    ActualListProducts = new ObservableCollection<object>(catalog.PriceSort(RealListProducts));
                 }
                 OnPropertyChanged("MaxPrice");
             }
@@ -266,7 +286,22 @@ namespace StoreCatalogWPF.ViewModels
                 return sort ??
                   (sort = new RelayCommand(obj =>
                   {
-                      
+                      ActualListProducts = new ObservableCollection<object>(catalog.GeneralSort(RealListProducts));
+                  }));
+            }
+        }
+
+        private RelayCommand delete;
+
+        public RelayCommand Delete
+        {
+            get
+            {
+                return delete ??
+                  (delete = new RelayCommand(obj =>
+                  {
+                      catalog.DeleteProduct((GeneralProduct)ActualSelectedProduct);
+                      ActualListProducts = new ObservableCollection<object>(catalog.GetRequiredList(ActualSelectedProduct));
                   }));
             }
         }
