@@ -10,6 +10,16 @@
              xmlns:PhotoVideoEquipment ="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments"
              d:DesignHeight="450" d:DesignWidth="800" Background="Orange">
     <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                Value="{Binding RelativeSource={RelativeSource Self},
+                    Path=(Validation.Errors)[0].ErrorContent}"  />
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <DataTemplate DataType="{x:Type AudioEquipment:AcousticHiFi}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -17,14 +27,24 @@
                     <ColumnDefinition Width="0,5*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
+                    <TextBlock Text="ID"/>
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="ID">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Title"/>
                     <TextBox Text="{Binding Title}"/>
                     <TextBlock Text="Producer"/>
                     <TextBox Text="{Binding Producer}"/>
                     <TextBlock Text="Price"/>
                     <TextBox Text="{Binding Price}"/>
-                    <TextBlock Text="Phone Storage"/>
-                    <TextBox Text="{Binding PhoneNumber}"/>
+                    <TextBlock Text="AmountProduct"/>
+                    <TextBox Text="{Binding AmountProduct}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Capasity"/>
@@ -45,14 +65,24 @@
                     <ColumnDefinition Width="0,5*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
+                    <TextBlock Text="ID"/>
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="ID">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Title"/>
                     <TextBox Text="{Binding Title}"/>
                     <TextBlock Text="Producer"/>
                     <TextBox Text="{Binding Producer}"/>
                     <TextBlock Text="Price"/>
                     <TextBox Text="{Binding Price}"/>
-                    <TextBlock Text="Phone Storage"/>
-                    <TextBox Text="{Binding PhoneNumber}"/>
+                    <TextBlock Text="AmountProduct"/>
+                    <TextBox Text="{Binding AmountProduct}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Capasity"/>
@@ -73,14 +103,32 @@
                     <ColumnDefinition Width="0,5*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
+                    <TextBlock Text="ID"/>
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="ID">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Title"/>
                     <TextBox Text="{Binding Title}"/>
                     <TextBlock Text="Producer"/>
                     <TextBox Text="{Binding Producer}"/>
                     <TextBlock Text="Price"/>
-                    <TextBox Text="{Binding Price}"/>
-                    <TextBlock Text="Phone Storage"/>
-                    <TextBox Text="{Binding PhoneNumber}"/>
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="Price">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="AmountProduct"/>
+                    <TextBox Text="{Binding AmountProduct}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Capasity"/>
@@ -101,14 +149,24 @@
                 <ColumnDefinition Width="0,5*" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
+                    <TextBlock Text="ID"/>
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="ID">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 <TextBlock Text="Title"/>
                 <TextBox Text="{Binding Title}"/>
                 <TextBlock Text="Producer"/>
                 <TextBox Text="{Binding Producer}"/>
                 <TextBlock Text="Price"/>
                 <TextBox Text="{Binding Price}"/>
-                    <TextBlock Text="PhoneNumber"/>
-                <TextBox Text="{Binding PhoneNumber}"/>
+                    <TextBlock Text="AmountProduct"/>
+                    <TextBox Text="{Binding AmountProduct}"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
                     <TextBlock Text="TypeMatrix"/>
@@ -131,14 +189,23 @@
                     <ColumnDefinition Width="0,5*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="ID">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Title"/>
                     <TextBox Text="{Binding Title}"/>
                     <TextBlock Text="Producer"/>
                     <TextBox Text="{Binding Producer}"/>
                     <TextBlock Text="Price"/>
                     <TextBox Text="{Binding Price}"/>
-                    <TextBlock Text="PhoneNumber"/>
-                    <TextBox Text="{Binding PhoneNumber}"/>
+                    <TextBlock Text="AmountProduct"/>
+                    <TextBox Text="{Binding AmountProduct}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="TypeMatrix"/>
@@ -159,14 +226,24 @@
                     <ColumnDefinition Width="0,5*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
+                    <TextBlock Text="ID"/>
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="ID">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Title"/>
                     <TextBox Text="{Binding Title}"/>
                     <TextBlock Text="Producer"/>
                     <TextBox Text="{Binding Producer}"/>
                     <TextBlock Text="Price"/>
                     <TextBox Text="{Binding Price}"/>
-                    <TextBlock Text="PhoneNumber"/>
-                    <TextBox Text="{Binding PhoneNumber}"/>
+                    <TextBlock Text="AmountProduct"/>
+                    <TextBox Text="{Binding AmountProduct}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="OS"/>
@@ -187,14 +264,24 @@
                     <ColumnDefinition Width="0,5*" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
+                    <TextBlock Text="ID"/>
+                    <TextBox>
+                        <TextBox.Text>
+                            <Binding  Path="ID">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                     <TextBlock Text="Title"/>
                     <TextBox Text="{Binding Title}"/>
                     <TextBlock Text="Producer"/>
                     <TextBox Text="{Binding Producer}"/>
                     <TextBlock Text="Price"/>
                     <TextBox Text="{Binding Price}"/>
-                    <TextBlock Text="PhoneNumber"/>
-                    <TextBox Text="{Binding PhoneNumber}"/>
+                    <TextBlock Text="AmountProduct"/>
+                    <TextBox Text="{Binding AmountProduct}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="OS"/>

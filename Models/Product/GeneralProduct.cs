@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using StoreCatalogWPF.Models.Product.TypeProduct;
 
 namespace StoreCatalogWPF.Models.Product
 {
     [Serializable]
     class GeneralProduct:ICloneable,INotifyPropertyChanged
     {
-        private string producer;
+        private string producer="";
+        private string title="";
+        private double price;
+        private int amountProduct;
+        private int iD;
+
+
         public string Producer
         {
             set
@@ -26,7 +33,6 @@ namespace StoreCatalogWPF.Models.Product
             }
         }
 
-        private string title;
         public string Title
         {
             set
@@ -40,13 +46,12 @@ namespace StoreCatalogWPF.Models.Product
             }
         }
 
-        private double price;
         public double Price
         {
             set
             {
                 price = value;
-                OnPropertyChanged("Prise");
+                OnPropertyChanged("Price");
             }
             get
             {
@@ -54,17 +59,46 @@ namespace StoreCatalogWPF.Models.Product
             }
         }
 
-        private string phoneNumber;
-        public string PhoneNumber
+        public int AmountProduct
         {
             set
             {
-                phoneNumber = value;
-                OnPropertyChanged("PhoneNumber");
+                amountProduct = value;
+                OnPropertyChanged("AmountProduct");
             }
             get
             {
-                return phoneNumber;
+                return amountProduct;
+            }
+        }
+        
+
+        //private string pathImage;
+
+        //public string PathImage
+        //{
+        //    set
+        //    {
+        //        pathImage = value;
+        //        OnPropertyChanged("PathImage");
+        //    }
+        //    get
+        //    {
+        //        return pathImage;
+        //    }
+        //}
+
+
+        public int ID
+        {
+            set
+            {
+                iD = value;
+                OnPropertyChanged("ID");
+            }
+            get
+            {
+                return iD;
             }
         }
 

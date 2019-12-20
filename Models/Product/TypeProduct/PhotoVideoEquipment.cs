@@ -26,7 +26,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        private string typeMatrix;
+        private string typeMatrix="";
         public string TypeMatrix
         {
             set
@@ -41,7 +41,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        private string matrixSize;
+        private string matrixSize="";
         public string MatrixSize
         {
             set
@@ -55,7 +55,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        private string resolution;
+        private string resolution="";
 
         public string Resolution
         {

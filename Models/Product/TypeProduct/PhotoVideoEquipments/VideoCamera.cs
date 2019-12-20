@@ -10,7 +10,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments
     [Serializable]
     class VideoCamera:PhotoVideoEquipment
     {
-        private string videoCompressionFormat;
+        private string videoCompressionFormat = "";
 
         public string VideoCompressionFormat
         {

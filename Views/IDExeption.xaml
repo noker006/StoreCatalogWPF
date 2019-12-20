@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="StoreCatalogWPF.Views.IDExeption"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StoreCatalogWPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0.6*"/>
+            <RowDefinition Height="0.4*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+            <ListBox  ItemsSource="{Binding SameIDProductsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedSameIDProduct}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                        <TextBlock Text="{Binding Producer, FallbackValue=Collapsed, StringFormat=Producer: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding Title, FallbackValue=Collapsed, StringFormat=Title: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding Price, FallbackValue=Collapsed, StringFormat=Price: {0}, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding AmountProduct, FallbackValue=Collapsed, StringFormat=AmountProduct: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2">
+            <TextBlock/>
+            <TextBox Text="{Binding ID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <ListBox ItemsSource="{Binding ExistingIDList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ID, StringFormat=ID: {0} AlreadyExist }"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Content="New ID" Command="{Binding NewId}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

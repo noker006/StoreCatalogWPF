@@ -89,6 +89,10 @@ namespace StoreCatalogWPF.ViewModels
         {
             MessageBoxResult add = MessageBox.Show("Product Added");
         }
+        private void NoAddMessage()
+        {
+            MessageBoxResult Noadd = MessageBox.Show("Product not added,this id is already exists");
+        }
         public string SelectedTypeProduct
         {
             set
@@ -190,10 +194,26 @@ namespace StoreCatalogWPF.ViewModels
             {
                 return save ??
                   (save = new RelayCommand(obj =>
-                  {                      
-                      catalog.AddProduct(ActualSelectedProduct);
-                      ActualSelectedProduct = catalog.CreateNewObject(ActualSelectedProduct);
-                      AddMessage();
+                  {
+                      int counter = 0;
+                      for (int i = 0; i < catalog.Products.Count; i++)
+                      {
+                          if (ActualSelectedProduct.ID == catalog.Products[i].ID)
+                          {
+                              counter++;
+                              break;
+                          }
+                      } 
+                      if (counter == 0)
+                      {
+                         catalog.AddProduct(ActualSelectedProduct);
+                         ActualSelectedProduct = catalog.CreateNewObject(ActualSelectedProduct);
+                         AddMessage();
+                      }
+                      else
+                      {
+                         NoAddMessage();
+                      }
                   }));
             }
         }

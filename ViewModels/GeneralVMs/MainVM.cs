@@ -11,12 +11,7 @@ namespace StoreCatalogWPF.ViewModels.GeneralVMs
     abstract class MainVM : INotifyPropertyChanged
     {
         protected object currentVM;
-        protected List<BasicVM> viewModels;
-
-        public MainVM()
-        {
-            viewModels = new List<BasicVM>();
-        }
+        static protected List<BasicVM> viewModels = new List<BasicVM>();
 
         public void NextWindow(string NeedSuchViewModel)
         {
@@ -28,7 +23,7 @@ namespace StoreCatalogWPF.ViewModels.GeneralVMs
                     break;
                 }
                 else
-                    currentVM = this;
+                currentVM = this;
             }
             OnPropertyChanged("CurrentVM");
         }
@@ -40,6 +35,7 @@ namespace StoreCatalogWPF.ViewModels.GeneralVMs
             viewModels.Add(newVM);
         }
 
+        [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {

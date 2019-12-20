@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace StoreCatalogWPF.Views
 {
     /// <summary>
-    /// Логика взаимодействия для CatalogV.xaml
+    /// Логика взаимодействия для IDExeption.xaml
     /// </summary>
-    public partial class CatalogV : UserControl
+    public partial class IDExeption : UserControl
     {
-        public CatalogV()
+        public IDExeption()
         {
             InitializeComponent();
         }
+
     }
 }

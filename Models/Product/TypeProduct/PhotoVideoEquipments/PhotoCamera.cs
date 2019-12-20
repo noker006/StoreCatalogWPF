@@ -10,8 +10,8 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments
     [Serializable]
     class PhotoCamera:PhotoVideoEquipment
     {
-        private string typeOfCamera;
-        private string opticalZoom;
+        private string typeOfCamera = "";
+        private string opticalZoom = "";
         public string TypeOfCamera
         {
             set
@@ -24,7 +24,6 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments
                 return typeOfCamera;
             }
         }
-
         public string OpticalZoom
         {
             set

@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Comparers\PriceComparer.cs" />
+    <Compile Include="Models\ID.cs" />
     <Compile Include="Models\Selection.cs" />
     <Compile Include="RelCommand\RelayCommand.cs" />
     <Compile Include="TemplateSelectors\TypeProductSelector.cs" />
@@ -64,11 +65,15 @@
     <Compile Include="ViewModels\GeneralVMs\MainVM.cs" />
     <Compile Include="ViewModels\GeneralVMs\BasicVM.cs" />
     <Compile Include="ViewModels\GeneralVMs\VMManager.cs" />
+    <Compile Include="ViewModels\IDExeptionVM.cs" />
     <Compile Include="Views\AddProductV.xaml.cs">
       <DependentUpon>AddProductV.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CatalogV.xaml.cs">
       <DependentUpon>CatalogV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IDExeption.xaml.cs">
+      <DependentUpon>IDExeption.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -87,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CatalogV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IDExeption.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

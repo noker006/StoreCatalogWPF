@@ -11,21 +11,21 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
     [Serializable]
     class WirelessSpeaker: AudioEquipment
     {
-        private int batteryCapacity;
-        public int BattteryCapacity
+        private int capacityBattery;
+        public int CapacityBatttery
         {
             set
             {
-                batteryCapacity = value;
+                capacityBattery = value;
                 OnPropertyChanged("BattteryCapacity");
             }
             get
             {
-                return batteryCapacity;
+                return capacityBattery;
             }
         }
 
-        private string stereoSpeakers;
+        private string stereoSpeakers = "";
         public string StereoSpeakers
         {
             set

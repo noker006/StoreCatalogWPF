@@ -26,7 +26,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        private string oS;
+        private string oS="";
         public string OS
         {
             set
@@ -40,7 +40,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        private string batteryCapacity;
+        private string batteryCapacity = "";
         public string BatteryCapacity
         {
             set

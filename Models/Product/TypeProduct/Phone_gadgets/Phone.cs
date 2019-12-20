@@ -10,7 +10,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets
     [Serializable]
     class Phone:Phone_Phonegadget
     {
-        private string processor;
+        private string processor = "";
         public string Processor
         {
             set

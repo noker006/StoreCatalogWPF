@@ -12,67 +12,110 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Orange">
     <UserControl.Resources>
-        
         <DataTemplate DataType="{x:Type AudioEqupment:AcousticHiFi}">
             <StackPanel>
-                <TextBlock Text="Sensitivity"/>
-                <TextBox Text="{Binding Sensitivity}"/>
+                <TextBlock Text="Capasity"/>
+                <TextBox Text="{Binding Capasity}"/>
                 <TextBlock Text="DownFrequencyRange"/>
                 <TextBox Text="{Binding DownFrequencyRange}"/>
                 <TextBlock Text="UpperFrequencyRange"/>
                 <TextBox Text="{Binding UpperFrequencyRange}"/>
+                <TextBlock Text="Sensitivity"/>
+                <TextBox Text="{Binding Sensitivity}"/>
             </StackPanel>
         </DataTemplate>
-        
         <DataTemplate DataType="{x:Type AudioEqupment:MusicCentre}">
             <StackPanel>
+                <TextBlock Text="Capasity"/>
+                <TextBox Text="{Binding Capasity}"/>
+                <TextBlock Text="DownFrequencyRange"/>
+                <TextBox Text="{Binding DownFrequencyRange}"/>
+                <TextBlock Text="UpperFrequencyRange"/>
+                <TextBox Text="{Binding UpperFrequencyRange}"/>
                 <TextBlock Text="AmountEqualizerMode"/>
                 <TextBox Text="{Binding AmountEqualizerMode}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type AudioEqupment:WirelessSpeaker}">
             <StackPanel>
-                <TextBlock Text="BattteryCapacity"/>
-                <TextBox Text="{Binding BattteryCapacity}"/>
+                <TextBlock Text="Capasity"/>
+                <TextBox Text="{Binding Capasity}"/>
+                <TextBlock Text="DownFrequencyRange"/>
+                <TextBox Text="{Binding DownFrequencyRange}"/>
+                <TextBlock Text="UpperFrequencyRange"/>
+                <TextBox Text="{Binding UpperFrequencyRange}"/>
+                <TextBlock Text="CapacityBatttery"/>
+                <TextBox Text="{Binding CapacityBatttery}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type Phone_gadget:Phone}">
             <StackPanel>
+                <TextBlock Text="OS"/>
+                <TextBox Text="{Binding OS}"/>
+                <TextBlock Text="BatteryCapacity"/>
+                <TextBox Text="{Binding BatteryCapacity}"/>
                 <TextBlock Text="Processor"/>
                 <TextBox Text="{Binding Processor}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type Phone_gadget:SmartWatch}">
             <StackPanel>
+                <TextBlock Text="OS"/>
+                <TextBox Text="{Binding OS}"/>
+                <TextBlock Text="BatteryCapacity"/>
+                <TextBox Text="{Binding BatteryCapacity}"/>
                 <TextBlock Text="TypeSmartWatch"/>
                 <TextBox Text="{Binding TypeSmartWatch}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type PhotoVideoEquipment:PhotoCamera}">
             <StackPanel>
+                <TextBlock Text="TypeMatrix"/>
+                <TextBox Text="{Binding TypeMatrix}"/>
+                <TextBlock Text="MatrixSize"/>
+                <TextBox Text="{Binding MatrixSize}"/>
+                <TextBlock Text="Resolution"/>
+                <TextBox Text="{Binding Resolution}"/>
                 <TextBlock Text="TypeOfCamera"/>
                 <TextBox Text="{Binding TypeOfCamera}"/>
             </StackPanel>
         </DataTemplate>
         <DataTemplate DataType="{x:Type PhotoVideoEquipment:VideoCamera}">
             <StackPanel>
+                <TextBlock Text="TypeMatrix"/>
+                <TextBox Text="{Binding TypeMatrix}"/>
+                <TextBlock Text="MatrixSize"/>
+                <TextBox Text="{Binding MatrixSize}"/>
+                <TextBlock Text="Resolution"/>
+                <TextBox Text="{Binding Resolution}"/>
                 <TextBlock Text="VideoCompressionFormat"/>
                 <TextBox Text="{Binding VideoCompressionFormat}"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="0.2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="40"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <Menu Grid.ColumnSpan="4"  >
+            <MenuItem Header="File">
+                <MenuItem Header="Open"  Command="{Binding Open}"/>
+                <MenuItem Header="Save"  Command="{Binding Save}"/>
+            </MenuItem>
+            <MenuItem Header="Product">
+                <MenuItem Header="Add Product" Command="{Binding Next}" CommandParameter="AddProductVM"/>
+                <MenuItem Header="Export" Command="{Binding Export}" />
+                <MenuItem Header="Import" Command="{Binding Import}" />
+            </MenuItem>
+        </Menu>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2">
             <ComboBox ItemsSource="{Binding TitlesTypeProduct}" SelectedItem="{Binding SelectedTypeProduct }" IsEditable="True" Width="130"/>
             <ComboBox ItemsSource="{Binding AudioEquipments}"  SelectedItem="{Binding SelectedAudioEquipment}" Width="130" Visibility="{Binding VisibilityAudioEquipment}">
@@ -97,31 +140,66 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <ListBox ItemsSource="{Binding ActualListProducts}" SelectedItem="{Binding ActualSelectedProduct}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.Row="2" Margin="0,0,0.4,41.6">
-            <ListBox.ItemTemplate>
+        <ListBox ItemsSource="{Binding ActualListProducts}" SelectionMode="Extended" SelectedItem="{Binding ActualSelectedProduct,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.ColumnSpan="2" Margin="150,35,0.4,41.6" >
+            <ListBox.ItemTemplate >
                 <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Producer, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Text="{Binding Title, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Text="{Binding Price, FallbackValue=Collapsed, StringFormat={}{0:C}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Text="{Binding Capasity, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Text="{Binding UpperFrequencyRange, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Text="{Binding DownFrequencyRange, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Text="{Binding BatteryCapacity, FallbackValue=Collapsed}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
-                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding Producer, FallbackValue=Collapsed, StringFormat=Producer: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding Title, FallbackValue=Collapsed, StringFormat=Title: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding Price, FallbackValue=Collapsed, StringFormat=Price: {0}, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding AmountProduct, FallbackValue=Collapsed, StringFormat=AmountProduct: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding ID, FallbackValue=Collapsed, StringFormat=ID: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding Capasity, FallbackValue=Collapsed, StringFormat=Capasity: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding UpperFrequencyRange, FallbackValue=Collapsed,StringFormat=UpperFrequencyRange: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding DownFrequencyRange, FallbackValue=Collapsed,StringFormat=DownFrequencyRange: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding BatteryCapacity, FallbackValue=Collapsed, StringFormat=BatteryCapacity {0:мАч}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding OS, FallbackValue=Collapsed, StringFormat=OS {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding TypeMatrix, FallbackValue=Collapsed, StringFormat=TypeMatrix {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding MatrixSize, FallbackValue=Collapsed, StringFormat=MatrixSize {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding Resolution, FallbackValue=Collapsed, StringFormat=Resolution {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="4" HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding Sensitivity, FallbackValue=Collapsed, StringFormat=Sensitivity: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding AmountEqualizerMode, FallbackValue=Collapsed,StringFormat=AmountEqualizerMode: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding StereoSpeakers, FallbackValue=Collapsed,StringFormat=StereoSpeakers: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding CapacityBatttery, FallbackValue=Collapsed,StringFormat=CapacityBatttery: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding Processor, FallbackValue=Collapsed,StringFormat=Processor: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding CpuClock, FallbackValue=Collapsed,StringFormat=CpuClock: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding TypeSmartWatch, FallbackValue=Collapsed,StringFormat=CapacityBatttery: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding TypeOfCamera, FallbackValue=Collapsed,StringFormat=TypeOfCamera: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="{Binding VideoCompressionFormat, FallbackValue=Collapsed,StringFormat=VideoCompressionFormat: {0}}" Visibility="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Text, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Column="2" Grid.Row="2" DataContext="{Binding ActualSelectedProduct}">
-            <TextBlock Text="Title"/>
-            <TextBox Text="{Binding Title}"/>
-            <TextBlock Text="Producer"/>
-            <TextBox Text="{Binding Producer}"/>
-            <TextBlock Text="Price"/>
-            <TextBox Text="{Binding Price}"/>
-            <TextBlock Text="Phone Storage"/>
-            <TextBox Text="{Binding PhoneNumber}"/>
-        </StackPanel>
+        <Grid Grid.Column="2" Grid.Row="2" Visibility="{Binding VisibilityEditWeald}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"  DataContext="{Binding ActualSelectedProduct}">
+                <TextBlock Text="Title"/>
+                <TextBox Text="{Binding Title}"/>
+                <TextBlock Text="Producer"/>
+                <TextBox Text="{Binding Producer}"/>
+                <TextBlock Text="Price"/>
+                <TextBox Text="{Binding Price, Mode=TwoWay}"/>
+                <TextBlock Text="AmountProduct"/>
+                <TextBox Text="{Binding AmountProduct}"/>
+            </StackPanel>
+            <ContentPresenter Grid.Column="1"  Content="{Binding ActualSelectedProduct}"/>
+        </Grid>
         <StackPanel Grid.Column="0" Grid.Row="2">
             <TextBlock Text="MinPrice"/>
             <Grid>
@@ -135,9 +213,13 @@
             <TextBlock Text="Producer"/>
             <ComboBox Grid.Column="0" ItemsSource="{Binding ProducerList}" SelectedItem="{Binding SelectedProducer}"/>
         </StackPanel>
-        <ContentPresenter Grid.Column="3" Grid.Row="2" Content="{Binding ActualSelectedProduct}"/>
-        <Button Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100" Margin="199.6,0,50.8,6.6"  Command="{Binding Delete}" Content="Delete"/>
+        <StackPanel Grid.Column="1" Grid.Row="2" MinHeight="25"  MaxHeight="50"  MinWidth="120" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5.4,0" Orientation="Horizontal" Visibility="{Binding VisibilitySearch}" >
+            <ComboBox ItemsSource="{Binding SearchList}" SelectedItem="{Binding SelectedTypeSearch}"/>
+            <TextBox MinHeight="25"  MaxHeight="50"  MinWidth="120" Text="{Binding DesiredString, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <Button Grid.Column="2" Grid.Row="2" Content="Done" VerticalAlignment="Bottom" HorizontalAlignment="Center" Command="{Binding Done}"   Height="30" Width="50" Margin="37.6,0,42,9.6" />
+        <Button Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100"  Command="{Binding Delete}" Content="Delete" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="150,0,0,9.6"/>
+        <Button Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100"  Command="{Binding Edit}" Content="Edit" HorizontalAlignment="Left" Margin="118.6,0,0,9.6" Grid.Column="1"/>
         <Button Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom" Height="30" Width="100" Margin="24,0,26.4,9.6" Command="{Binding Sort}" Content="Sort"/>
-        <Button Content="Add" Grid.Column="1" Grid.Row="2" Height="30" Width="100" VerticalAlignment="Bottom" Margin="22.6,0,227.8,6.6" Command="{Binding Next}" CommandParameter="AddProductVM" />
     </Grid>
 </UserControl>

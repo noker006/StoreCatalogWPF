@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace StoreCatalogWPF.ViewModels.GeneralVMs
 {
-    class BasicVM : INotifyPropertyChanged
+    class BasicVM: MainVM,INotifyPropertyChanged
     {
         public static Catalog catalog=new Catalog();
 
@@ -34,15 +34,6 @@ namespace StoreCatalogWPF.ViewModels.GeneralVMs
                         Root.NextWindow(needOpen);
                     }));
             }
-        }
-
-        [field:NonSerialized]
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

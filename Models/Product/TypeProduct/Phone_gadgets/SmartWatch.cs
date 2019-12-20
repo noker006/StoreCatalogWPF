@@ -24,7 +24,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets
             }
         }
 
-        private string typeSmartWatch;
+        private string typeSmartWatch = "";
 
         public string TypeSmartWatch
         {
