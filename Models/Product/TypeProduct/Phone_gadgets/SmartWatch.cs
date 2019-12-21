@@ -17,6 +17,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets
             set
             {
                 capacityMusicPlayer = value;
+                OnPropertyChanged("CapacityMusicPlayer");
             }
             get
             {
@@ -25,13 +26,12 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets
         }
 
         private string typeSmartWatch = "";
-
         public string TypeSmartWatch
         {
             set
             {
                 typeSmartWatch = value;
-                OnPropertyChanged("typeSmartWatch");
+                OnPropertyChanged("TypeSmartWatch");
             }
             get
             {

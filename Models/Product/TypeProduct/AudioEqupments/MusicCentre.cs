@@ -11,17 +11,44 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
     class MusicCentre:AudioEquipment
     {
         private int amountEqualizerMode;
-
         public int AmountEqualizerMode
         {
             set
             {
                 amountEqualizerMode = value;
-                OnPropertyChanged();
+                OnPropertyChanged("AmountEqualizerMode");
             }
             get
             {
                 return amountEqualizerMode;
+            }
+        }
+
+        private double wooferDiameter;
+        public double WooferDiameter
+        {
+            set
+            {
+                wooferDiameter = value;
+                OnPropertyChanged("WooferDiameter");
+            }
+            get
+            {
+                return wooferDiameter;
+            }
+        }
+
+        private double tweeterDiameter;
+        public double TweeterDiametr
+        {
+            set
+            {
+                tweeterDiameter = value;
+                OnPropertyChanged("TweeterDiametr");
+            }
+            get
+            {
+                return tweeterDiameter;
             }
         }
     }

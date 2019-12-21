@@ -56,8 +56,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Comparers\PriceComparer.cs" />
-    <Compile Include="Models\ID.cs" />
-    <Compile Include="Models\Selection.cs" />
     <Compile Include="RelCommand\RelayCommand.cs" />
     <Compile Include="TemplateSelectors\TypeProductSelector.cs" />
     <Compile Include="ViewModels\AddProductVM.cs" />

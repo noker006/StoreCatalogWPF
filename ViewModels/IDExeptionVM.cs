@@ -86,7 +86,14 @@ namespace StoreCatalogWPF.ViewModels
                       {
                           if (catalog.RealsameIDExportImportProducts.Count == 0)
                           {
-                              catalog.SerializeExportProducts();
+                              if (catalog.IsImportProduct==false)
+                              {
+                                  catalog.SerializeExportProducts();
+                              }
+                              else
+                              {
+                                  catalog.AddImportProducts();
+                              }
                               Root.NextWindow("CatalogVM");
 
                           }

@@ -26,6 +26,19 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
             }
         }
 
+        private int totalMaximumPower;
+        public int TotalMaximumPower
+        {
+            set
+            {
+                totalMaximumPower = value;
+                OnPropertyChanged("TotalMaximumPower");
+            }
+            get
+            {
+                return totalMaximumPower;
+            }
+        }
 
     }
 }

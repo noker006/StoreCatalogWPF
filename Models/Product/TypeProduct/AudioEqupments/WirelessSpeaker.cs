@@ -12,12 +12,12 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
     class WirelessSpeaker: AudioEquipment
     {
         private int capacityBattery;
-        public int CapacityBatttery
+        public int CapacityBattery
         {
             set
             {
                 capacityBattery = value;
-                OnPropertyChanged("BattteryCapacity");
+                OnPropertyChanged("CapacityBattery");
             }
             get
             {
@@ -25,8 +25,8 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments
             }
         }
 
-        private string stereoSpeakers = "";
-        public string StereoSpeakers
+        private bool stereoSpeakers = false;
+        public bool StereoSpeakers
         {
             set
             {

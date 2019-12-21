@@ -62,20 +62,21 @@ namespace StoreCatalogWPF.Models
                 {
                     products = (List<GeneralProduct>)formatter.Deserialize(stream);
                 }
+                CatalogOpen = true;
             }
         }
-        public void Save()
+        public void SaveAs()
         {
             SaveFileDialog saveFile = new SaveFileDialog();
             saveFile.Filter = "bin file (*.bin)|*.bin";
               if (saveFile.ShowDialog() == true)
-            {
+              {
                 var formatter = new BinaryFormatter();
                 using (FileStream stream = File.Create(saveFile.FileName))
                 {
                     formatter.Serialize(stream, Products);
                 }
-            }
+              }
         }
 
         public void Export()
@@ -115,6 +116,8 @@ namespace StoreCatalogWPF.Models
 
 
         public bool SameId_DifferentProduct=false;
+        public bool IsImportProduct = false;
+        public bool CatalogOpen = false;
 
         public double MinPrice
         {
@@ -147,6 +150,17 @@ namespace StoreCatalogWPF.Models
 
         public string RequiredProducer;
 
+        public List<GeneralProduct> RealListProducts
+        {
+            set
+            {
+                realListProducts = value;
+            }
+            get
+            {
+                return realListProducts;
+            }
+        }
         public List<GeneralProduct> Products
         {
             get
@@ -180,6 +194,7 @@ namespace StoreCatalogWPF.Models
         private List<GeneralProduct> exportImportProducts=new List<GeneralProduct>();
         private List<GeneralProduct> existingIDList;
         private List<GeneralProduct> sameIDExportImportProducts;
+        private List<GeneralProduct> realListProducts;
         public List<string> CreateListProducer(List<GeneralProduct> products)
         {
             List<string> producers = new List<string>();
@@ -209,6 +224,7 @@ namespace StoreCatalogWPF.Models
             }
             return CloneRealListProducts;
         }
+
 
         public List<GeneralProduct> GetRequiredList(object NeededTypeList)
         {
@@ -388,14 +404,25 @@ namespace StoreCatalogWPF.Models
                 {
                     if (exportImportProducts[j].ID == Products[i].ID)
                     {
+                        if (exportImportProducts[j].Title.ToLower() == Products[i].Title.ToLower() && exportImportProducts[j].Producer.ToLower() == Products[i].Producer.ToLower())
+                        {
                             Products[i].AmountProduct += exportImportProducts[j].AmountProduct;
-                        exportImportProducts.Remove(exportImportProducts[j]);
+                            exportImportProducts.Remove(exportImportProducts[j]);
                             j--;
+                        }
+                        else
+                        {
+                            exportImportProducts[j].ID = 0;
+                            SameId_DifferentProduct = true;
+                            IsImportProduct = true;
+                        }
                     }
                 }
-                Products.Add(Products[i]);
             }
-            exportImportProducts = new List<GeneralProduct>();
+            if (SameId_DifferentProduct == false)
+            {
+                AddImportProducts();
+            }
         }
         private void ExportProducts(List<GeneralProduct> exportImportProducts)//Валидация ID!=0 !!!ExportProducts = new List<GeneralProduct>();
         {
@@ -436,6 +463,17 @@ namespace StoreCatalogWPF.Models
            
         }
 
+        public void AddImportProducts()
+        {
+
+                for (int j = 0; j < exportImportProducts.Count; j++)
+                {
+                    products.Add(exportImportProducts[j]);
+                }
+ 
+            exportImportProducts = new List<GeneralProduct>();
+            IsImportProduct = false;
+        }
         public void SerializeExportProducts()
         {
             var formatter = new BinaryFormatter();
@@ -443,6 +481,7 @@ namespace StoreCatalogWPF.Models
             {
                 formatter.Serialize(stream, exportImportProducts);
             }
+            SameId_DifferentProduct = false;
             exportImportProducts = new List<GeneralProduct>();
         }
 
@@ -454,6 +493,13 @@ namespace StoreCatalogWPF.Models
                 if (exportImportProducts[i].ID != 0)
                 {
                     existingIDList.Add(new GeneralProduct { ID = exportImportProducts[i].ID });
+                }
+            }
+            if (IsImportProduct == true)
+            {
+                for (int i = 0; i < products.Count; i++)
+                {
+                    existingIDList.Add(new GeneralProduct { ID = products[i].ID });
                 }
             }
             return existingIDList;
@@ -474,17 +520,32 @@ namespace StoreCatalogWPF.Models
         public bool DeleteSameIDExportImportProduct(GeneralProduct SameIDExportImportProduct)
         {
             bool ExistingID = false;
-            for (int i = 0; i < existingIDList.Count; i++)
-            {
-                if (existingIDList[i].ID == SameIDExportImportProduct.ID&& SameIDExportImportProduct.ID!=0)
+                for (int i = 0; i < existingIDList.Count; i++)
                 {
-                    ExistingID = true;
+                    if (existingIDList[i].ID == SameIDExportImportProduct.ID && SameIDExportImportProduct.ID != 0)
+                    {
+                        ExistingID = true;
+                    }
                 }
-            }
             if (ExistingID == false)
             {
-                sameIDExportImportProducts.Remove(SameIDExportImportProduct);
-                return true;
+                if (IsImportProduct==false)
+                {
+                    sameIDExportImportProducts.Remove(SameIDExportImportProduct);
+                    return true;
+                }
+                else
+                {
+                    for (int i = 0; i < products.Count; i++)
+                    {
+                        if (products[i].ID== SameIDExportImportProduct.ID)
+                        {
+                            return false;
+                        }
+                    }
+                    sameIDExportImportProducts.Remove(SameIDExportImportProduct);
+                    return true;
+                }
             }
             return false;
         }

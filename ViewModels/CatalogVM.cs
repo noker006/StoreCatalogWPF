@@ -59,10 +59,8 @@ namespace StoreCatalogWPF.ViewModels
         private string minPrice;
         private string maxPrice;
         public List<string> TitlesTypeProduct { set; get; }
-
         public List<string> SearchList { set; get; }
         private ObservableCollection<GeneralProduct> actualListProducts;
-        private List<GeneralProduct> realListProducts;
         private List<string> producerList;
         private List<GeneralProduct> ExtendedSelectedProducts=new List<GeneralProduct>();
 
@@ -172,8 +170,8 @@ namespace StoreCatalogWPF.ViewModels
                 selectedAudioEquipment = value;
                 VisibilitySearch = Visibility.Visible;
                 ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
-                RealListProducts=new List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
-                ProducerList = new List<string>(catalog.CreateListProducer(RealListProducts));
+                catalog.RealListProducts=new List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
+                ProducerList = new List<string>(catalog.CreateListProducer(catalog.RealListProducts));
                 OnPropertyChanged("SelectedAudioEquipment");
             }
             get
@@ -189,8 +187,8 @@ namespace StoreCatalogWPF.ViewModels
                 selectedPhone_Phonegadget = value;
                 VisibilitySearch = Visibility.Visible;
                 ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(selectedPhone_Phonegadget));
-                RealListProducts= new List<GeneralProduct>(catalog.GetRequiredList(selectedPhone_Phonegadget));
-                ProducerList = new List<string>(catalog.CreateListProducer(RealListProducts));
+                catalog.RealListProducts= new List<GeneralProduct>(catalog.GetRequiredList(selectedPhone_Phonegadget));
+                ProducerList = new List<string>(catalog.CreateListProducer(catalog.RealListProducts));
                 OnPropertyChanged("SelectedPhone_Phonegadget");
             }
             get
@@ -206,8 +204,8 @@ namespace StoreCatalogWPF.ViewModels
                 selectedPhotoVideoEquipment = value;
                 VisibilitySearch = Visibility.Visible;
                 ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(selectedPhotoVideoEquipment));
-                RealListProducts=new  List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
-                ProducerList = new List<string>(catalog.CreateListProducer(RealListProducts));
+                catalog.RealListProducts=new  List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
+                ProducerList = new List<string>(catalog.CreateListProducer(catalog.RealListProducts));
                 OnPropertyChanged("SelectedPhotoVideoEquipment");
             }
             get
@@ -250,7 +248,7 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 desiredString = value;
-                ActualListProducts=new ObservableCollection<GeneralProduct>(catalog.Search(desiredString, RealListProducts));
+                ActualListProducts=new ObservableCollection<GeneralProduct>(catalog.Search(desiredString, catalog.RealListProducts));
                 OnPropertyChanged("DesiredString");
             }
             get
@@ -296,18 +294,6 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public List<GeneralProduct> RealListProducts
-        {
-            set
-            {
-                realListProducts = value;
-                OnPropertyChanged("RealListProducts");
-            }
-            get
-            {
-                return realListProducts;
-            }
-        }
         public string MinPrice
         {
             set
@@ -348,7 +334,7 @@ namespace StoreCatalogWPF.ViewModels
                 return sort ??
                   (sort = new RelayCommand(obj =>
                   {
-                      ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GeneralSort(RealListProducts));
+                      ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GeneralSort(catalog.RealListProducts));
                   }));
             }
         }
@@ -373,7 +359,7 @@ namespace StoreCatalogWPF.ViewModels
                   (delete = new RelayCommand(obj =>
                   {
                       catalog.DeleteProduct(ActualSelectedProduct);
-                      RealListProducts = new List<GeneralProduct>(catalog.GetRequiredList(ActualSelectedProduct));
+                      catalog.RealListProducts = new List<GeneralProduct>(catalog.GetRequiredList(ActualSelectedProduct));
                       ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(ActualSelectedProduct));
                   }));
             }
@@ -401,7 +387,7 @@ namespace StoreCatalogWPF.ViewModels
                       catalog.Open();
                   }));
             }
-        }
+        } 
 
         public RelayCommand Save
         {
@@ -410,7 +396,10 @@ namespace StoreCatalogWPF.ViewModels
                 return save ??
                   (save = new RelayCommand(obj =>
                   {
-                      catalog.Save();
+                      if (catalog.CatalogOpen)
+                      {
+                          //catalog.Save();
+                      }
                   }));
             }
         }
@@ -422,8 +411,11 @@ namespace StoreCatalogWPF.ViewModels
                 return export ??
                   (export = new RelayCommand(obj =>
                   {
-                      catalog.Export();
-                      Root.CurrentVM = new IDExeptionVM("IDExeptionVM",Root);
+                      if (catalog.CatalogOpen)
+                      {
+                          catalog.Export();
+                          Root.CurrentVM = new IDExeptionVM("IDExeptionVM", Root);
+                      }
                   }));
             }
         }
@@ -435,11 +427,30 @@ namespace StoreCatalogWPF.ViewModels
                 return import ??
                   (import = new RelayCommand(obj =>
                   {
-                      catalog.Import();
+                      if (catalog.CatalogOpen)
+                      {
+                          catalog.Import();
+                          Root.CurrentVM = new IDExeptionVM("IDExeptionVM", Root);
+                      }
                   }));
             }
         }
 
+        private RelayCommand saveAs;
         
+        private RelayCommand SaveAs
+        {
+            get
+            {
+                return saveAs ??
+                  (saveAs = new RelayCommand(obj =>
+                  {
+                      if (catalog.CatalogOpen)
+                      {
+                          catalog.SaveAs();
+                      }
+                  }));
+            }
+        }
     }
 }
