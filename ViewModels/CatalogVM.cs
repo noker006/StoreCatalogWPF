@@ -54,7 +54,9 @@ namespace StoreCatalogWPF.ViewModels
         private Visibility visibilityPhotoVideoEquipment;
         private Visibility visibilityEditWeald;
         private Visibility visibilitySearch;
-
+        private Visibility visibilityAudioEquipmentSort;
+        private Visibility visibilityPhone_PhonegadgetSort;
+        private Visibility visibilityPhotoVideoEquipmentSort;
 
 
         private string minPrice;
@@ -158,6 +160,7 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
+        
 
 
         public List<string> TitlesTypeProduct { set; get; }
@@ -225,6 +228,36 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
+        public Visibility VisibilityAudioEquipmentSort
+        {
+            set
+            {
+                visibilityAudioEquipmentSort = value;
+                OnPropertyChanged();
+            }
+            get => visibilityAudioEquipmentSort;
+        }
+
+        public Visibility VisibilityPhone_PhonegadgetSort
+        {
+            set
+            {
+                visibilityPhone_PhonegadgetSort = value;
+                OnPropertyChanged();
+            }
+            get => visibilityPhone_PhonegadgetSort;
+        }
+
+        public Visibility VisibilityPhotoVideoEquipmentSort
+        {
+            set
+            {
+                visibilityPhotoVideoEquipmentSort = value;
+                OnPropertyChanged();
+            }
+            get => visibilityPhotoVideoEquipmentSort;
+        }
+
         public string SelectedTypeProduct
         {
             set
@@ -237,6 +270,9 @@ namespace StoreCatalogWPF.ViewModels
                             VisibilityPhone_Phonegadget = Visibility.Collapsed;
                             VisibilityPhotoVideoEquipment = Visibility.Collapsed;
                             VisibilityAudioEquipment = Visibility.Visible;
+                            VisibilityAudioEquipmentSort = Visibility.Visible;
+                            VisibilityPhone_PhonegadgetSort = Visibility.Collapsed;
+                            VisibilityPhotoVideoEquipmentSort = Visibility.Collapsed;
                             break;
                         }
                     case "Phone and gadgets":
@@ -244,6 +280,9 @@ namespace StoreCatalogWPF.ViewModels
                             VisibilityAudioEquipment = Visibility.Collapsed;
                             VisibilityPhotoVideoEquipment = Visibility.Collapsed;
                             VisibilityPhone_Phonegadget = Visibility.Visible;
+                            VisibilityAudioEquipmentSort = Visibility.Collapsed;
+                            VisibilityPhone_PhonegadgetSort = Visibility.Visible;
+                            VisibilityPhotoVideoEquipmentSort = Visibility.Collapsed;
                             break;
                         }
                     case "Photo-Video Equpments":
@@ -251,6 +290,9 @@ namespace StoreCatalogWPF.ViewModels
                             VisibilityPhone_Phonegadget = Visibility.Collapsed;
                             VisibilityAudioEquipment = Visibility.Collapsed;
                             VisibilityPhotoVideoEquipment = Visibility.Visible;
+                            VisibilityAudioEquipmentSort = Visibility.Collapsed;
+                            VisibilityPhone_PhonegadgetSort = Visibility.Collapsed;
+                            VisibilityPhotoVideoEquipmentSort = Visibility.Visible;
                             break;
                         }
                     default: break;

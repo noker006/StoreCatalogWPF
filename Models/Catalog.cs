@@ -457,13 +457,27 @@ namespace StoreCatalogWPF.Models
                         }
                         else
                         {
-                            GeneralProduct BufferProduct = new GeneralProduct();
-                            BufferProduct = (GeneralProduct)Products[i].Clone();
-                            BufferProduct.ID = 0;
-                            exportroducts.Add(BufferProduct);
-                            exportroducts.Add(exportImportProducts[j]);//общий лист со всеми обектами ,даже c повторившимися(их ID равен 0) ID 
-                            NeeedRecordtoExportProducts = false;
-                            SameId_DifferentProduct = true;
+                            bool IsExportroductHaveExistProduct = false; //проверка если уже существует товар с такимже именем но другим id не идти дальше
+                            for (int k = 0; k < exportImportProducts.Count; k++)
+                            {
+                                if(exportImportProducts[k].Title.ToLower() == Products[i].Title.ToLower() && exportImportProducts[k].Producer.ToLower() == Products[i].Producer.ToLower())
+                                {
+                                    IsExportroductHaveExistProduct = true;
+                                    NeeedRecordtoExportProducts = false;
+                                    exportImportProducts[k].AmountProduct += Products[i].AmountProduct;
+                                    exportroducts.Add(exportImportProducts[k]);
+                                }
+                            }
+                            if (IsExportroductHaveExistProduct == false)
+                            {
+                                GeneralProduct BufferProduct = new GeneralProduct();
+                                BufferProduct = (GeneralProduct)Products[i].Clone();
+                                BufferProduct.ID = 0;
+                                exportroducts.Add(BufferProduct);
+                                exportroducts.Add(exportImportProducts[j]);//общий лист со всеми обектами ,даже c повторившимися(их ID равен 0) ID 
+                                NeeedRecordtoExportProducts = false;
+                                SameId_DifferentProduct = true;
+                            }
                         }
                     }
                 }
@@ -498,11 +512,11 @@ namespace StoreCatalogWPF.Models
             SameId_DifferentProduct = false;
             exportroducts = new ObservableCollection<GeneralProduct>();
             exportImportProducts = new ObservableCollection<GeneralProduct>();
-        }
-        public bool DeleteSameIDExportImportProduct(GeneralProduct SameIDExportImportProduct,ObservableCollection<GeneralProduct> SameIDProductsList)
+        }//отсортировать на дубликаты!!!!!!!!!!!111
+        public bool DeleteSameIDExportImportProduct(GeneralProduct SameIDExportImportProduct,ObservableCollection<GeneralProduct> SameIDProductsList,ObservableCollection<GeneralProduct> ExistingIDList)
         {
             bool ExistingID = false;
-                for (int i = 0; i < realexistingIDList.Count; i++)
+                for (int i = 0; i < ExistingIDList.Count; i++)
                 {
                     if (realexistingIDList[i].ID == SameIDExportImportProduct.ID && SameIDExportImportProduct.ID != 0)
                     {
@@ -513,6 +527,7 @@ namespace StoreCatalogWPF.Models
             {
                 if (IsImportProduct==false)
                 {
+                    ExistingIDList.Add(new GeneralProduct { ID = SameIDExportImportProduct.ID });
                     SameIDProductsList.Remove(SameIDExportImportProduct);
                     return true;
                 }
@@ -525,6 +540,7 @@ namespace StoreCatalogWPF.Models
                             return false;
                         }
                     }
+                    ExistingIDList.Add(new GeneralProduct { ID = SameIDExportImportProduct.ID });
                     SameIDProductsList.Remove(SameIDExportImportProduct);
                     return true;
                 }
@@ -535,7 +551,6 @@ namespace StoreCatalogWPF.Models
         {
             ExportImportProduct.ID = ID;
         }
-
 
         //AddProduct
         public void AddProduct(GeneralProduct product)

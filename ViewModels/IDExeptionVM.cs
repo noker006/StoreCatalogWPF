@@ -46,7 +46,6 @@ namespace StoreCatalogWPF.ViewModels
         }
 
         private GeneralProduct selectedSameIDProduct;
-
         public GeneralProduct SelectedSameIDProduct
         {
             set
@@ -73,7 +72,6 @@ namespace StoreCatalogWPF.ViewModels
         }
 
         private RelayCommand newId;
-
         public RelayCommand NewId
         {
             get
@@ -82,7 +80,7 @@ namespace StoreCatalogWPF.ViewModels
                   (newId = new RelayCommand(obj =>
                   {
                       catalog.AddNewID(ID, SelectedSameIDProduct);
-                      if (catalog.DeleteSameIDExportImportProduct(SelectedSameIDProduct,SameIDProductsList))
+                      if (catalog.DeleteSameIDExportImportProduct(SelectedSameIDProduct,SameIDProductsList, ExistingIDList))
                       {
                           if (catalog.RealsameIDExportImportProducts.Count == 0)
                           {

@@ -213,9 +213,9 @@
             <TextBlock Text="Producer"/>
             <ComboBox Grid.Column="0" ItemsSource="{Binding ProducerList}" SelectedItem="{Binding SelectedProducer}"/>
             <TextBlock MaxHeight="10"/>
-            <UserControls:AudioEquipmentSort/>
-            <UserControls:Phone_PhonegadgetSort/>
-            <UserControls:PhotoVideoEquipmentSort/>
+            <UserControls:AudioEquipmentSort Visibility="{Binding VisibilityAudioEquipmentSort}"/>
+            <UserControls:Phone_PhonegadgetSort Visibility="{Binding VisibilityPhone_PhonegadgetSort}"/>
+            <UserControls:PhotoVideoEquipmentSort Visibility="{Binding VisibilityPhotoVideoEquipmentSort}"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2" MinHeight="25"  MaxHeight="50"  MinWidth="120" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5.4,0" Orientation="Horizontal" Visibility="{Binding VisibilitySearch}" >
             <ComboBox ItemsSource="{Binding SearchList}" SelectedItem="{Binding SelectedTypeSearch}"/>
