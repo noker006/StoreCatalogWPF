@@ -12,7 +12,6 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
     class Phone_Phonegadget:GeneralProduct
     {
         private string subtypeName;
-
         public string SubtypeName
         {
             set
@@ -40,8 +39,8 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             }
         }
 
-        private string batteryCapacity = "";
-        public string BatteryCapacity
+        private int batteryCapacity ;
+        public int BatteryCapacity
         {
             set
             {
@@ -53,8 +52,6 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
                 return batteryCapacity;
             }
         }
-
-
 
     }
 }

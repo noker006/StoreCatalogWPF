@@ -71,23 +71,6 @@ namespace StoreCatalogWPF.Models.Product
                 return amountProduct;
             }
         }
-        
-
-        //private string pathImage;
-
-        //public string PathImage
-        //{
-        //    set
-        //    {
-        //        pathImage = value;
-        //        OnPropertyChanged("PathImage");
-        //    }
-        //    get
-        //    {
-        //        return pathImage;
-        //    }
-        //}
-
 
         public int ID
         {

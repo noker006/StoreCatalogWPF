@@ -57,7 +57,6 @@
     </ApplicationDefinition>
     <Compile Include="Comparers\PriceComparer.cs" />
     <Compile Include="RelCommand\RelayCommand.cs" />
-    <Compile Include="TemplateSelectors\TypeProductSelector.cs" />
     <Compile Include="ViewModels\AddProductVM.cs" />
     <Compile Include="ViewModels\CatalogVM.cs" />
     <Compile Include="ViewModels\GeneralVMs\MainVM.cs" />
@@ -72,6 +71,15 @@
     </Compile>
     <Compile Include="Views\IDExeption.xaml.cs">
       <DependentUpon>IDExeption.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\AudioEquipmentSort.xaml.cs">
+      <DependentUpon>AudioEquipmentSort.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Phone_PhonegadgetSort.xaml.cs">
+      <DependentUpon>Phone_PhonegadgetSort.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\PhotoVideoEquipmentSort.xaml.cs">
+      <DependentUpon>PhotoVideoEquipmentSort.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,6 +102,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\IDExeption.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\AudioEquipmentSort.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\Phone_PhonegadgetSort.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\PhotoVideoEquipmentSort.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

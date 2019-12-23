@@ -53,6 +53,8 @@
                     <TextBox Text="{Binding UpperFrequencyRange}"/>
                     <TextBlock Text="DownFrequencyRange"/>
                     <TextBox Text="{Binding DownFrequencyRange}"/>
+                    <TextBlock Text="TotalMaximumPower"/>
+                    <TextBox Text="{Binding TotalMaximumPower}"/>
                     <TextBlock Text="Sensitivity"/>
                     <TextBox Text="{Binding Sensitivity}"/>
                 </StackPanel>
@@ -93,6 +95,10 @@
                     <TextBox Text="{Binding DownFrequencyRange}"/>
                     <TextBlock Text="AmountEqualizerMode"/>
                     <TextBox Text="{Binding AmountEqualizerMode}"/>
+                    <TextBlock Text="AmountEqualizerMode"/>
+                    <TextBox Text="{Binding WooferDiameter}"/>
+                    <TextBlock Text="AmountEqualizerMode"/>
+                    <TextBox Text="{Binding TweeterDiametr}"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -106,7 +112,7 @@
                     <TextBlock Text="ID"/>
                     <TextBox>
                         <TextBox.Text>
-                            <Binding  Path="ID">
+                            <Binding Path="ID">
                                 <Binding.ValidationRules>
                                     <ExceptionValidationRule/>
                                 </Binding.ValidationRules>
@@ -137,8 +143,10 @@
                     <TextBox Text="{Binding UpperFrequencyRange}"/>
                     <TextBlock Text="DownFrequencyRange"/>
                     <TextBox Text="{Binding DownFrequencyRange}"/>
-                    <TextBlock Text="BattteryCapacity"/>
-                    <TextBox Text="{Binding BattteryCapacity}"/>
+                    <TextBlock Text="Synchronization"/>
+                    <TextBox Text="{Binding Synchronization}"/>
+                    <TextBlock Text="StereoSpeakers"/>
+                    <TextBox Text="{Binding StereoSpeakers}"/>
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -216,6 +224,9 @@
                     <TextBox Text="{Binding Resolution}"/>
                     <TextBlock Text="VideoCompressionFormat"/>
                     <TextBox Text="{Binding VideoCompressionFormat}"/>
+                    <TextBlock Text="Is 3D"/>
+                    <TextBox Text="{Binding Is3D}"/>
+
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -339,5 +350,10 @@
         </StackPanel>
         <Button Content="Save" Grid.Column="2" MinHeight="40" MaxHeight="35" Margin="23,-22,23,91.6" Grid.RowSpan="3" Command="{Binding Save}"/>
         <Button Content="Cansel" Grid.Column="2" MinHeight="40" MaxHeight="35" Margin="23,10,23,39.6" Grid.RowSpan="2" Command="{Binding Next}" CommandParameter="CatalogVM" Grid.Row="1" />
+        <TextBlock Grid.Column="3" Grid.Row="2">
+    fields highlighted in red
+    <LineBreak />
+    will be recorded as default values
+        </TextBlock>
     </Grid>
 </UserControl>

@@ -30,6 +30,7 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets
             set
             {
                 cpuClock = value;
+                OnPropertyChanged("CpuClock");
             }
             get
             {

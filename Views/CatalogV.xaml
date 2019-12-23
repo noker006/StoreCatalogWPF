@@ -8,7 +8,7 @@
              xmlns:AudioEqupment="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.AudioEqupments"
              xmlns:Phone_gadget="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.Phone_gadgets"
              xmlns:PhotoVideoEquipment="clr-namespace:StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments"
-             xmlns:TemplateSelectors ="clr-namespace:StoreCatalogWPF.TemplateSelectors"
+             xmlns:UserControls="clr-namespace:StoreCatalogWPF.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="Orange">
     <UserControl.Resources>
@@ -93,7 +93,6 @@
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
@@ -109,6 +108,7 @@
             <MenuItem Header="File">
                 <MenuItem Header="Open"  Command="{Binding Open}"/>
                 <MenuItem Header="Save"  Command="{Binding Save}"/>
+                <MenuItem Header="SaveAs"  Command="{Binding SaveAs}"/>
             </MenuItem>
             <MenuItem Header="Product">
                 <MenuItem Header="Add Product" Command="{Binding Next}" CommandParameter="AddProductVM"/>
@@ -140,7 +140,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </StackPanel>
-        <ListBox ItemsSource="{Binding ActualListProducts}" SelectionMode="Extended" SelectedItem="{Binding ActualSelectedProduct,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.ColumnSpan="2" Margin="150,35,0.4,41.6" >
+        <ListBox ItemsSource="{Binding ActualCollectionProducts}" SelectionMode="Extended" SelectedItem="{Binding ActualSelectedProduct,Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.ColumnSpan="2" Margin="150,35,0.4,41.6" >
             <ListBox.ItemTemplate >
                 <DataTemplate>
                     <Grid>
@@ -212,6 +212,10 @@
             </Grid>
             <TextBlock Text="Producer"/>
             <ComboBox Grid.Column="0" ItemsSource="{Binding ProducerList}" SelectedItem="{Binding SelectedProducer}"/>
+            <TextBlock MaxHeight="10"/>
+            <UserControls:AudioEquipmentSort/>
+            <UserControls:Phone_PhonegadgetSort/>
+            <UserControls:PhotoVideoEquipmentSort/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2" MinHeight="25"  MaxHeight="50"  MinWidth="120" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,5,5.4,0" Orientation="Horizontal" Visibility="{Binding VisibilitySearch}" >
             <ComboBox ItemsSource="{Binding SearchList}" SelectedItem="{Binding SelectedTypeSearch}"/>

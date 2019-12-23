@@ -23,19 +23,19 @@ namespace StoreCatalogWPF.Models
     {
        public Catalog()
        {
-            products = new List<GeneralProduct>();
-            AllSubtypesAudioEquipment = new List<AudioEquipment>
+            products = new ObservableCollection<GeneralProduct>();
+            AllSubtypesAudioEquipment = new ObservableCollection<AudioEquipment>
             {
                 new AcousticHiFi {SubtypeName="HiFiAcoustic"},
                 new MusicCentre{SubtypeName="MusicCentre"},
                 new WirelessSpeaker{SubtypeName="WirelessSpeaker"}
             };
-            AllSubtypesPhone_Phonegadget = new List<Phone_Phonegadget>
+            AllSubtypesPhone_Phonegadget = new ObservableCollection<Phone_Phonegadget>
             {
                 new Phone{SubtypeName="Phone"},
                 new SmartWatch{SubtypeName="SmartWatch"}
             };
-            AllSubtypesPhotoVideoEquipment = new List<PhotoVideoEquipment>
+            AllSubtypesPhotoVideoEquipment = new ObservableCollection<PhotoVideoEquipment>
             {
                 new PhotoCamera{SubtypeName="PhotoCamera"},
                 new VideoCamera{SubtypeName="VideoCamera"}
@@ -43,10 +43,14 @@ namespace StoreCatalogWPF.Models
             System.Windows.Application.Current.Exit += ExitSerialization;
         }
 
+        private string PathFileOpen;
+        public bool CatalogOpen = false;
+
         private void ExitSerialization(object sender, System.Windows.ExitEventArgs e)
         {
             var formatter = new BinaryFormatter();
-            using (FileStream stream = File.Create("ExtremeSave.bin"))
+
+            using (FileStream stream = File.Create("ExtrimSave.bin"))
             {
                 formatter.Serialize(stream,Products);
             }
@@ -60,8 +64,9 @@ namespace StoreCatalogWPF.Models
                 var formatter = new BinaryFormatter();
                 using (FileStream stream = File.OpenRead(openFileDialog.FileName))
                 {
-                    products = (List<GeneralProduct>)formatter.Deserialize(stream);
+                    products = (ObservableCollection<GeneralProduct>)formatter.Deserialize(stream);
                 }
+                PathFileOpen = openFileDialog.FileName;
                 CatalogOpen = true;
             }
         }
@@ -78,7 +83,14 @@ namespace StoreCatalogWPF.Models
                 }
               }
         }
-
+        public void Save()
+        {
+            var formatter = new BinaryFormatter();
+            using (FileStream stream = File.Create(PathFileOpen))
+            {
+                formatter.Serialize(stream,Products);
+            }
+        }
         public void Export()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -89,7 +101,7 @@ namespace StoreCatalogWPF.Models
                 ExportImportPath = openFileDialog.FileName;
                 using (FileStream stream = File.OpenRead(ExportImportPath))
                 {
-                    exportImportProducts = (List<GeneralProduct>)formatter.Deserialize(stream);
+                    exportImportProducts = (ObservableCollection<GeneralProduct>)formatter.Deserialize(stream);
                 }
                 ExportProducts(exportImportProducts);
             }
@@ -104,38 +116,14 @@ namespace StoreCatalogWPF.Models
                 ExportImportPath = openFileDialog.FileName;
                 using (FileStream stream = File.OpenRead(ExportImportPath))
                 {
-                    exportImportProducts = (List<GeneralProduct>)formatter.Deserialize(stream);
+                  exportImportProducts = (ObservableCollection<GeneralProduct>)formatter.Deserialize(stream);
                 }
                 ImportProducts(exportImportProducts);
             }
         }
-        private double minPrice;
-        private double maxPrice;
+
+
         private string actualTypeSearch;
-        private string ExportImportPath;
-
-
-        public bool SameId_DifferentProduct=false;
-        public bool IsImportProduct = false;
-        public bool CatalogOpen = false;
-
-        public double MinPrice
-        {
-            set
-            {
-                minPrice = value;
-            }
-            get => minPrice;
-        }
-        public double MaxPrice
-        {
-            set
-            {
-                maxPrice = value;
-            }
-            get => maxPrice;
-        }
-
         public string ActualTypeSearch
         {
             set
@@ -147,21 +135,39 @@ namespace StoreCatalogWPF.Models
                 return actualTypeSearch;
             }
         }
+        
 
-        public string RequiredProducer;
-
-        public List<GeneralProduct> RealListProducts
+        public double MaxPrice;
+        public double MinPrice;
+        public string Producer;
+        public double MaxCapasity;
+        public double MinCapasity;
+        public double MinBatteryCapacity;
+        public double MaxBatteryCapacity;
+        public double UpperFrequencyRange;
+        public void GeneralSort(ObservableCollection<GeneralProduct> ActualCollectionProducts)
         {
-            set
+            for (int i = 0; i < ActualCollectionProducts.Count; i++)
             {
-                realListProducts = value;
-            }
-            get
-            {
-                return realListProducts;
+                if ((MaxPrice > 0 && MinPrice >= 0) && (ActualCollectionProducts[i].Price > MaxPrice || ActualCollectionProducts[i].Price < MinPrice))
+                {
+                    ActualCollectionProducts.Remove(ActualCollectionProducts[i]);
+                }
+                if ((MaxCapasity > 0 && MinCapasity >= 0) && (((AudioEquipment)ActualCollectionProducts[i]).Capasity > MaxCapasity || ((AudioEquipment)ActualCollectionProducts[i]).Capasity < MinCapasity))
+                {
+                    ActualCollectionProducts.Remove(ActualCollectionProducts[i]);
+                }
+                if (UpperFrequencyRange == ((AudioEquipment)ActualCollectionProducts[i]).UpperFrequencyRange)
+                {
+                    ActualCollectionProducts.Remove(ActualCollectionProducts[i]);
+                }
+                if ((MaxBatteryCapacity > 0 && MinBatteryCapacity >= 0) && (((Phone)ActualCollectionProducts[i]).BatteryCapacity > MaxBatteryCapacity || ((Phone)ActualCollectionProducts[i]).BatteryCapacity < MinBatteryCapacity))
+                {
+                    ActualCollectionProducts.Remove(ActualCollectionProducts[i]);
+                }
             }
         }
-        public List<GeneralProduct> Products
+        public ObservableCollection<GeneralProduct> Products
         {
             get
             {
@@ -169,66 +175,9 @@ namespace StoreCatalogWPF.Models
             }
         }
 
-        public List<GeneralProduct> ExportImportProducts
+        public ObservableCollection<GeneralProduct> CreateActualCollection(object NeededTypeList)
         {
-            get
-            {
-                return exportImportProducts;
-            }
-        }
-
-        public List<GeneralProduct> RealExistingIDList
-        {
-            get => existingIDList;
-        }
-
-        public List<GeneralProduct> RealsameIDExportImportProducts
-        {
-            get => sameIDExportImportProducts;
-        }
-
-        public List<AudioEquipment> AllSubtypesAudioEquipment;
-        public List<Phone_Phonegadget> AllSubtypesPhone_Phonegadget;
-        public List<PhotoVideoEquipment> AllSubtypesPhotoVideoEquipment;
-        private List<GeneralProduct> products;
-        private List<GeneralProduct> exportImportProducts=new List<GeneralProduct>();
-        private List<GeneralProduct> existingIDList;
-        private List<GeneralProduct> sameIDExportImportProducts;
-        private List<GeneralProduct> realListProducts;
-        public List<string> CreateListProducer(List<GeneralProduct> products)
-        {
-            List<string> producers = new List<string>();
-            for (int i = 0; i < products.Count; i++)
-            {
-                producers.Add(products[i].Producer);
-            }
-            for (int i = 0; i < producers.Count - 1; i++)
-            {
-                for (int j = 0; j < producers.Count - i - 1; j++)
-                {
-                    if (producers[j + 1] == producers[j])
-                    {
-                        producers.Remove((string)producers[j+1]);
-                        j--;
-                    }
-                }
-            }
-            return producers;
-        }
-        private List<GeneralProduct> CloningRealListProducts(List<GeneralProduct> RealListProducts)
-        {
-            List<GeneralProduct> CloneRealListProducts=new List<GeneralProduct>();
-            for (int i = 0; i < RealListProducts.Count; i++)
-            {
-                CloneRealListProducts.Add((GeneralProduct)RealListProducts[i].Clone());
-            }
-            return CloneRealListProducts;
-        }
-
-
-        public List<GeneralProduct> GetRequiredList(object NeededTypeList)
-        {
-            List<GeneralProduct> RequiredProducts = new List<GeneralProduct>();
+            ObservableCollection<GeneralProduct> RequiredProducts = new ObservableCollection<GeneralProduct>();
             for (int i = 0; i < Products.Count; i++)
             {
                 if (NeededTypeList.GetType() == Products[i].GetType())
@@ -238,29 +187,110 @@ namespace StoreCatalogWPF.Models
             }
             return RequiredProducts;
         }
-        public List<GeneralProduct> PriceSort(List<GeneralProduct> CloneRealListProducts)
+        public void CreateRealCollection(ObservableCollection<GeneralProduct> ActualCollection)
         {
-            if (maxPrice > 0 && minPrice > 0)
+           realListProducts=CloningRealListProducts(ActualCollection);
+        }
+        private ObservableCollection<GeneralProduct> CloningRealListProducts(ObservableCollection<GeneralProduct> RealListProducts)
+        {
+            ObservableCollection<GeneralProduct> CloneRealListProducts=new ObservableCollection<GeneralProduct>();
+            for (int i = 0; i < RealListProducts.Count; i++)
             {
-                PriceComparer priceComparer = new PriceComparer();
-                for (int i = 0; i < CloneRealListProducts.Count; i++)
-                {
-                    if (CloneRealListProducts[i].Price > maxPrice || CloneRealListProducts[i].Price < minPrice)
-                    {
-                        CloneRealListProducts.Remove(CloneRealListProducts[i]);
-                        i--;
-                    }
-                }
-                CloneRealListProducts.Sort(priceComparer);
-                return CloneRealListProducts;
+                CloneRealListProducts.Add((GeneralProduct)RealListProducts[i].Clone());
             }
             return CloneRealListProducts;
         }
-        private List<GeneralProduct> ProduProducerSort(List<GeneralProduct> CloneRealListProducts)
+
+        public ObservableCollection<AudioEquipment> AllSubtypesAudioEquipment;
+        public ObservableCollection<Phone_Phonegadget> AllSubtypesPhone_Phonegadget;
+        public ObservableCollection<PhotoVideoEquipment> AllSubtypesPhotoVideoEquipment;
+
+        private ObservableCollection<GeneralProduct> products;
+        private ObservableCollection<GeneralProduct> realListProducts;
+        private List<GeneralProduct> ClonerealListProducts = new List<GeneralProduct>();
+        private AudioEquipment audioEquipment;
+        private Phone_Phonegadget phone_Phonegadget;
+        private PhotoCamera photoCamera;
+        private GeneralProduct actualSelectedType;//для обновлений
+        public GeneralProduct ActualSelectedType
         {
+            set
+            {
+                actualSelectedType = value;
+            }
+            get => actualSelectedType;
+        }
+
+        public List<string> CreateProducerList(GeneralProduct NeededTypeList)
+        {
+            List<string> producers = new List<string>();
+            for (int i = 0; i < products.Count; i++)
+            {   if (NeededTypeList.GetType() == products[i].GetType())
+                {
+                    producers.Add(products[i].Producer);
+                }
+            }
+            HashSet<string> Produsers = new HashSet<string>(producers);
+            return new List<string>(Produsers);
+        }
+        public List<int> CreateUpperFrequencyRangeList(GeneralProduct NeededTypeList)
+        {
+            List<int>upperFrequencyRanges = new List<int>();
+            for (int i = 0; i < products.Count; i++)
+            {
+                if (NeededTypeList.GetType() == products[i].GetType())
+                {
+                    upperFrequencyRanges.Add(((AudioEquipment)products[i]).UpperFrequencyRange);
+                }
+            }
+            HashSet<int> UpperFrequencyRanges = new HashSet<int>(upperFrequencyRanges);
+            return new List<int>(UpperFrequencyRanges);
+       }
+        public void DeleteProduct(GeneralProduct DeletedProduct,ObservableCollection<GeneralProduct> ActualCollectionProducts)    
+        {
+            ActualCollectionProducts.Remove(DeletedProduct);
+            for (int i = 0; i < Products.Count; i++)
+            {
+                if (Products[i] == DeletedProduct)
+                {
+                    if (realListProducts[i].ID == DeletedProduct.ID)
+                    {
+                        realListProducts.Remove(realListProducts[i]);
+                    }
+                    Products.Remove(Products[i]);
+                    i--;
+                }
+            }
+        }
+
+
+        public ObservableCollection<GeneralProduct> Search(string EnterString)
+        {
+                switch (actualTypeSearch)
+                {
+                    case "Title":
+                        {
+                            return TitleSearch(EnterString);
+                        }
+                    case "ID":
+                        {
+                            return IDSearch(EnterString);
+                        }
+                    case "Producer":
+                        {
+                            return ProducerSearch(EnterString);
+                        }
+                    default:
+                        break;
+                }
+                return realListProducts;
+        }
+        private ObservableCollection<GeneralProduct> TitleSearch(string Titlestring)
+        {
+            ObservableCollection<GeneralProduct> CloneRealListProducts = CloningRealListProducts(realListProducts);
             for (int i = 0; i < CloneRealListProducts.Count; i++)
             {
-                if(CloneRealListProducts[i].Producer != RequiredProducer)
+                if (CloneRealListProducts[i].Title.Contains(Titlestring)==false)
                 {
                     CloneRealListProducts.Remove(CloneRealListProducts[i]);
                     i--;
@@ -268,16 +298,248 @@ namespace StoreCatalogWPF.Models
             }
             return CloneRealListProducts;
         }
-        public List<GeneralProduct> GeneralSort(List<GeneralProduct> RealListProducts)
+        public ObservableCollection<GeneralProduct> IDSearch(string Titlestring)//поиск для idExeption
         {
-            List<GeneralProduct> CloneRealListProducts = CloningRealListProducts(RealListProducts);
-            PriceSort(CloneRealListProducts);
-            ProduProducerSort(CloneRealListProducts);
+            if (SameId_DifferentProduct)
+            {
+                ObservableCollection<GeneralProduct> CloneRealListProducts = RealExistingIDList;
+                for (int i = 0; i < CloneRealListProducts.Count; i++)
+                {
+                    if (!CloneRealListProducts[i].ID.ToString().Contains(Titlestring))
+                    {
+                        CloneRealListProducts.Remove(CloneRealListProducts[i]);
+                        i--;
+                    }
+                }
+                return CloneRealListProducts;
+            }
+            else
+            {
+                ObservableCollection<GeneralProduct> CloneRealListProducts = CloningRealListProducts(realListProducts);
+                for (int i = 0; i < CloneRealListProducts.Count; i++)
+                {
+                    if (!CloneRealListProducts[i].ID.ToString().Contains(Titlestring))
+                    {
+                        CloneRealListProducts.Remove(CloneRealListProducts[i]);
+                        i--;
+                    }
+                }
+                return CloneRealListProducts;
+            }
+        }
+        private ObservableCollection<GeneralProduct> ProducerSearch(string Titlestring)
+        {
+            ObservableCollection<GeneralProduct> CloneRealListProducts = CloningRealListProducts(realListProducts);
+            for (int i = 0; i < CloneRealListProducts.Count; i++)
+            {
+                if (CloneRealListProducts[i].Producer.Contains(Titlestring)==false)
+                {
+                    CloneRealListProducts.Remove(CloneRealListProducts[i]);
+                    i--;
+                }
+            }
             return CloneRealListProducts;
         }
+
+        //IDExeption
+        public bool SameId_DifferentProduct=false;
+        public bool IsImportProduct = false;
+        private string ExportImportPath;
+
+        private ObservableCollection<GeneralProduct> exportImportProducts=new ObservableCollection<GeneralProduct>();
+        private ObservableCollection<GeneralProduct> realexistingIDList;
+        private ObservableCollection<GeneralProduct> realsameIDExportImportProducts;
+        private ObservableCollection<GeneralProduct> exportroducts=new ObservableCollection<GeneralProduct>();
+
+        public ObservableCollection<GeneralProduct> ExportImportProducts
+        {
+            get
+            {
+                return exportImportProducts;
+            }
+        }
+        public ObservableCollection<GeneralProduct> RealExistingIDList
+        {
+            get => realexistingIDList;
+        }
+        public ObservableCollection<GeneralProduct> RealsameIDExportImportProducts
+        {
+            get => realsameIDExportImportProducts;
+        }
+        public ObservableCollection<GeneralProduct> CreateExistingIDList() //List не инт тк пользуюсь Search для Обектов по ID
+        {
+            realexistingIDList = new ObservableCollection<GeneralProduct>();
+            for (int i = 0; i < exportImportProducts.Count; i++)
+            {
+                if (exportImportProducts[i].ID != 0)
+                {
+                    realexistingIDList.Add(new GeneralProduct { ID = exportImportProducts[i].ID });
+                }
+            }
+            if (IsImportProduct == true)
+            {
+                for (int i = 0; i < products.Count; i++)
+                {
+                    realexistingIDList.Add(new GeneralProduct { ID = products[i].ID });
+                }
+            }
+            return realexistingIDList;
+        }
+        public ObservableCollection<GeneralProduct> CreateSameIDProductsList()
+        {
+            realsameIDExportImportProducts = new ObservableCollection<GeneralProduct>();
+            if (IsImportProduct)
+            {
+                for (int i = 0; i < exportImportProducts.Count; i++)
+                {
+                    if (exportImportProducts[i].ID == 0)
+                    {
+                        realsameIDExportImportProducts.Add(exportImportProducts[i]);
+                    }
+                }
+                return realsameIDExportImportProducts;
+            }
+            else
+            {
+                for (int i = 0; i < exportroducts.Count; i++)
+                {
+                    if (exportroducts[i].ID == 0)
+                    {
+                        realsameIDExportImportProducts.Add(exportroducts[i]);
+                    }
+                }
+                return realsameIDExportImportProducts;
+            }
+        }
+        private void ImportProducts(ObservableCollection<GeneralProduct> exportImportProducts)
+        {
+            for (int i = 0; i < Products.Count; i++)
+            {
+                for (int j = 0; j < exportImportProducts.Count; j++)
+                {
+                    if (exportImportProducts[j].ID == Products[i].ID||(exportImportProducts[j].Title.ToLower() == Products[i].Title.ToLower() && exportImportProducts[j].Producer.ToLower() == Products[i].Producer.ToLower()))
+                    {
+                        if (exportImportProducts[j].Title.ToLower() == Products[i].Title.ToLower() && exportImportProducts[j].Producer.ToLower() == Products[i].Producer.ToLower())
+                        {
+                            Products[i].AmountProduct += exportImportProducts[j].AmountProduct;
+                            exportImportProducts.Remove(exportImportProducts[j]);
+                            j--;
+                        }
+                        else
+                        {
+                            exportImportProducts[j].ID = 0;
+                            SameId_DifferentProduct = true;
+                            IsImportProduct = true;
+                        }
+                    }
+                }
+            }
+            if (SameId_DifferentProduct == false)
+            {
+                AddImportProducts();
+            }
+        }
+        private void ExportProducts(ObservableCollection<GeneralProduct> exportImportProducts)//Валидация ID!=0 !!!ExportProducts = new ObservableCollection<GeneralProduct>();
+        {
+            bool NeeedRecordtoExportProducts = true;
+            for (int i = 0; i < Products.Count; i++)
+            {
+                for (int j = 0; j < exportImportProducts.Count; j++)
+                {
+                    if (exportImportProducts[j].ID == Products[i].ID || (exportImportProducts[j].Title.ToLower() == Products[i].Title.ToLower() && exportImportProducts[j].Producer.ToLower() == Products[i].Producer.ToLower()))
+                    {
+
+                        if (exportImportProducts[j].Title.ToLower() == Products[i].Title.ToLower() && exportImportProducts[j].Producer.ToLower() == Products[i].Producer.ToLower())
+                        {
+                            exportImportProducts[j].AmountProduct += Products[i].AmountProduct;
+                            exportroducts.Add(exportImportProducts[j]);
+                            NeeedRecordtoExportProducts = false;
+                        }
+                        else
+                        {
+                            GeneralProduct BufferProduct = new GeneralProduct();
+                            BufferProduct = (GeneralProduct)Products[i].Clone();
+                            BufferProduct.ID = 0;
+                            exportroducts.Add(BufferProduct);
+                            exportroducts.Add(exportImportProducts[j]);//общий лист со всеми обектами ,даже c повторившимися(их ID равен 0) ID 
+                            NeeedRecordtoExportProducts = false;
+                            SameId_DifferentProduct = true;
+                        }
+                    }
+                }
+                    if (NeeedRecordtoExportProducts == true)
+                    {
+                       exportroducts.Add(Products[i]);
+                    }
+                    NeeedRecordtoExportProducts = true;
+            }
+            if (SameId_DifferentProduct == false)
+            {
+                SerializeExportProducts();
+            }
+           
+        }
+        public void AddImportProducts()
+        {
+                for (int j = 0; j < exportImportProducts.Count; j++)
+                {
+                    products.Add(exportImportProducts[j]);
+                }
+            exportImportProducts = new ObservableCollection<GeneralProduct>();
+            IsImportProduct = false;
+        }
+        public void SerializeExportProducts()
+        {
+            var formatter = new BinaryFormatter();
+            using (FileStream stream = File.Create(ExportImportPath))
+            {
+                formatter.Serialize(stream, exportroducts);
+            }
+            SameId_DifferentProduct = false;
+            exportroducts = new ObservableCollection<GeneralProduct>();
+            exportImportProducts = new ObservableCollection<GeneralProduct>();
+        }
+        public bool DeleteSameIDExportImportProduct(GeneralProduct SameIDExportImportProduct,ObservableCollection<GeneralProduct> SameIDProductsList)
+        {
+            bool ExistingID = false;
+                for (int i = 0; i < realexistingIDList.Count; i++)
+                {
+                    if (realexistingIDList[i].ID == SameIDExportImportProduct.ID && SameIDExportImportProduct.ID != 0)
+                    {
+                        ExistingID = true;
+                    }
+                }
+            if (ExistingID == false)
+            {
+                if (IsImportProduct==false)
+                {
+                    SameIDProductsList.Remove(SameIDExportImportProduct);
+                    return true;
+                }
+                else
+                {
+                    for (int i = 0; i < products.Count; i++)
+                    {
+                        if (products[i].ID== SameIDExportImportProduct.ID)
+                        {
+                            return false;
+                        }
+                    }
+                    SameIDProductsList.Remove(SameIDExportImportProduct);
+                    return true;
+                }
+            }
+            return false;
+        }
+        public void AddNewID(int ID,GeneralProduct ExportImportProduct)
+        {
+            ExportImportProduct.ID = ID;
+        }
+
+
+        //AddProduct
         public void AddProduct(GeneralProduct product)
         {
-
             Products.Add(product);
         }
         public GeneralProduct CreateNewObject(GeneralProduct TypeProduct)
@@ -318,241 +580,6 @@ namespace StoreCatalogWPF.Models
                         return null;
                     }
             }
-        }
-        public void DeleteProduct(GeneralProduct DeletedProduct)
-        {
-            for (int i = 0; i < Products.Count; i++)
-            {
-                if (Products[i] == DeletedProduct)
-                {
-                    Products.Remove(Products[i]);
-                    i--;
-                }
-            }
-        }
-
-        public List<GeneralProduct> Search(string EnterString,List<GeneralProduct> RealListProducts)
-        {
-                switch (actualTypeSearch)
-                {
-                    case "Title":
-                        {
-                            return TitleSearch(RealListProducts, EnterString);
-                        }
-                    case "ID":
-                        {
-                            return IDSearch(RealListProducts, EnterString);
-                        }
-                    case "Producer":
-                        {
-                            return ProducerSearch(RealListProducts, EnterString);
-                        }
-                    default:
-                        break;
-                }
-                return RealListProducts;
-        }
-
-        private List<GeneralProduct> TitleSearch(List<GeneralProduct> RealListProducts, string Titlestring)
-        {
-            List<GeneralProduct> CloneRealListProducts = CloningRealListProducts(RealListProducts);
-            for (int i = 0; i < CloneRealListProducts.Count; i++)
-            {
-                if (CloneRealListProducts[i].Title.Contains(Titlestring)==false)
-                {
-                    CloneRealListProducts.Remove(CloneRealListProducts[i]);
-                    i--;
-                }
-            }
-            return CloneRealListProducts;
-        }
-
-        public List<GeneralProduct> IDSearch(List<GeneralProduct> RealListProducts, string Titlestring)
-        {
-            List<GeneralProduct> CloneRealListProducts = CloningRealListProducts(RealListProducts);
-            for (int i = 0; i < CloneRealListProducts.Count; i++)
-            {
-                if (!CloneRealListProducts[i].ID.ToString().Contains(Titlestring))
-                {
-                    CloneRealListProducts.Remove(CloneRealListProducts[i]);
-                    i--;
-                }
-            }
-            return CloneRealListProducts;
-        }
-
-        private List<GeneralProduct> ProducerSearch(List<GeneralProduct> RealListProducts, string Titlestring)
-        {
-            List<GeneralProduct> CloneRealListProducts = CloningRealListProducts(RealListProducts);
-            for (int i = 0; i < CloneRealListProducts.Count; i++)
-            {
-                if (CloneRealListProducts[i].Producer.Contains(Titlestring)==false)
-                {
-                    CloneRealListProducts.Remove(CloneRealListProducts[i]);
-                    i--;
-                }
-            }
-            return CloneRealListProducts;
-        }
-
-
-        private void ImportProducts(List<GeneralProduct> exportImportProducts)
-        {
-            for (int i = 0; i < Products.Count; i++)
-            {
-                for (int j = 0; j < exportImportProducts.Count; j++)
-                {
-                    if (exportImportProducts[j].ID == Products[i].ID)
-                    {
-                        if (exportImportProducts[j].Title.ToLower() == Products[i].Title.ToLower() && exportImportProducts[j].Producer.ToLower() == Products[i].Producer.ToLower())
-                        {
-                            Products[i].AmountProduct += exportImportProducts[j].AmountProduct;
-                            exportImportProducts.Remove(exportImportProducts[j]);
-                            j--;
-                        }
-                        else
-                        {
-                            exportImportProducts[j].ID = 0;
-                            SameId_DifferentProduct = true;
-                            IsImportProduct = true;
-                        }
-                    }
-                }
-            }
-            if (SameId_DifferentProduct == false)
-            {
-                AddImportProducts();
-            }
-        }
-        private void ExportProducts(List<GeneralProduct> exportImportProducts)//Валидация ID!=0 !!!ExportProducts = new List<GeneralProduct>();
-        {
-            bool NeeedRecordtoExportProducts = true;
-            for (int i = 0; i < Products.Count; i++)
-            {
-                for (int j = 0; j < exportImportProducts.Count; j++)
-                {
-                    if(exportImportProducts[j].ID==Products[i].ID)
-                    {
-
-                        if(exportImportProducts[j].Title.ToLower() == Products[i].Title.ToLower()&& exportImportProducts[j].Producer.ToLower() == Products[i].Producer.ToLower())
-                        {
-                            exportImportProducts[j].AmountProduct += Products[i].AmountProduct;
-                            NeeedRecordtoExportProducts = false;
-                        }
-                        else
-                        {
-                            GeneralProduct BufferProduct = new GeneralProduct();
-                            BufferProduct = (GeneralProduct)Products[i].Clone();
-                            BufferProduct.ID = 0;
-                            exportImportProducts.Add(BufferProduct); //общий лист со всеми обектами ,даже c повторившимися(их ID равен 0) ID 
-                            NeeedRecordtoExportProducts = false;
-                            SameId_DifferentProduct = true;
-                        }
-                    }
-                }
-                if (NeeedRecordtoExportProducts == true)
-                {
-                    exportImportProducts.Add(Products[i]);
-                }
-                NeeedRecordtoExportProducts = true;
-            }
-            if (SameId_DifferentProduct == false)
-            {
-                SerializeExportProducts();
-            }
-           
-        }
-
-        public void AddImportProducts()
-        {
-
-                for (int j = 0; j < exportImportProducts.Count; j++)
-                {
-                    products.Add(exportImportProducts[j]);
-                }
- 
-            exportImportProducts = new List<GeneralProduct>();
-            IsImportProduct = false;
-        }
-        public void SerializeExportProducts()
-        {
-            var formatter = new BinaryFormatter();
-            using (FileStream stream = File.Create(ExportImportPath))
-            {
-                formatter.Serialize(stream, exportImportProducts);
-            }
-            SameId_DifferentProduct = false;
-            exportImportProducts = new List<GeneralProduct>();
-        }
-
-        public List<GeneralProduct> CreateExistingIDList() //List не инт тк пользуюсь Search для Обектов по ID
-        {
-            existingIDList = new List<GeneralProduct>();
-            for (int i = 0; i < exportImportProducts.Count; i++)
-            {
-                if (exportImportProducts[i].ID != 0)
-                {
-                    existingIDList.Add(new GeneralProduct { ID = exportImportProducts[i].ID });
-                }
-            }
-            if (IsImportProduct == true)
-            {
-                for (int i = 0; i < products.Count; i++)
-                {
-                    existingIDList.Add(new GeneralProduct { ID = products[i].ID });
-                }
-            }
-            return existingIDList;
-        }
-        public List<GeneralProduct> CreateSameIDProductsList()
-        {
-            sameIDExportImportProducts = new List<GeneralProduct>();
-            for (int i = 0; i < exportImportProducts.Count; i++)
-            {
-                if (exportImportProducts[i].ID == 0)
-                {
-                    sameIDExportImportProducts.Add(exportImportProducts[i]);
-                }
-            }
-            return sameIDExportImportProducts;
-        }
-
-        public bool DeleteSameIDExportImportProduct(GeneralProduct SameIDExportImportProduct)
-        {
-            bool ExistingID = false;
-                for (int i = 0; i < existingIDList.Count; i++)
-                {
-                    if (existingIDList[i].ID == SameIDExportImportProduct.ID && SameIDExportImportProduct.ID != 0)
-                    {
-                        ExistingID = true;
-                    }
-                }
-            if (ExistingID == false)
-            {
-                if (IsImportProduct==false)
-                {
-                    sameIDExportImportProducts.Remove(SameIDExportImportProduct);
-                    return true;
-                }
-                else
-                {
-                    for (int i = 0; i < products.Count; i++)
-                    {
-                        if (products[i].ID== SameIDExportImportProduct.ID)
-                        {
-                            return false;
-                        }
-                    }
-                    sameIDExportImportProducts.Remove(SameIDExportImportProduct);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void AddNewID(int ID,GeneralProduct ExportImportProduct)
-        {
-            ExportImportProduct.ID = ID;
         }
     }
 }

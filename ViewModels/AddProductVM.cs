@@ -91,7 +91,7 @@ namespace StoreCatalogWPF.ViewModels
         }
         private void NoAddMessage()
         {
-            MessageBoxResult Noadd = MessageBox.Show("Product not added,this id is already exists");
+            MessageBoxResult Noadd = MessageBox.Show("Product not added, this id is already exists or ID is Zero");
         }
         public string SelectedTypeProduct
         {
@@ -204,7 +204,7 @@ namespace StoreCatalogWPF.ViewModels
                               break;
                           }
                       } 
-                      if (counter == 0)
+                      if (counter == 0&& ActualSelectedProduct.ID!=0)
                       {
                          catalog.AddProduct(ActualSelectedProduct);
                          ActualSelectedProduct = catalog.CreateNewObject(ActualSelectedProduct);

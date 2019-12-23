@@ -7,7 +7,7 @@ using StoreCatalogWPF.ViewModels.GeneralVMs;
 using StoreCatalogWPF.Models.Product;
 using StoreCatalogWPF.RelCommand;
 using System.Windows;
-
+using System.Collections.ObjectModel;
 namespace StoreCatalogWPF.ViewModels
 {
     class IDExeptionVM:BasicVM
@@ -18,9 +18,9 @@ namespace StoreCatalogWPF.ViewModels
             ExistingIDList = catalog.CreateExistingIDList();
         }
 
-       private List<GeneralProduct> sameIDProductsList;
-       private List<GeneralProduct> existingIDList;//хранятся только ID
-        public List<GeneralProduct> SameIDProductsList
+       private ObservableCollection<GeneralProduct> sameIDProductsList;
+       private ObservableCollection<GeneralProduct> existingIDList;//хранятся только ID
+        public ObservableCollection<GeneralProduct> SameIDProductsList
         {
             set
             {
@@ -32,7 +32,7 @@ namespace StoreCatalogWPF.ViewModels
                 return sameIDProductsList;
             }
         }
-        public List<GeneralProduct> ExistingIDList
+        public ObservableCollection<GeneralProduct> ExistingIDList
         {
             set
             {
@@ -66,7 +66,7 @@ namespace StoreCatalogWPF.ViewModels
             set
             {
                 iD = value;
-                ExistingIDList = catalog.IDSearch(catalog.RealExistingIDList,Convert.ToString(ID));
+                ExistingIDList = catalog.IDSearch(Convert.ToString(ID));
                 OnPropertyChanged("Id");
             }
             get => iD;
@@ -82,7 +82,7 @@ namespace StoreCatalogWPF.ViewModels
                   (newId = new RelayCommand(obj =>
                   {
                       catalog.AddNewID(ID, SelectedSameIDProduct);
-                      if (catalog.DeleteSameIDExportImportProduct(SelectedSameIDProduct))
+                      if (catalog.DeleteSameIDExportImportProduct(SelectedSameIDProduct,SameIDProductsList))
                       {
                           if (catalog.RealsameIDExportImportProducts.Count == 0)
                           {
@@ -96,8 +96,7 @@ namespace StoreCatalogWPF.ViewModels
                               }
                               Root.NextWindow("CatalogVM");
 
-                          }
-                          SameIDProductsList =new List<GeneralProduct>( catalog.RealsameIDExportImportProducts);
+                          }  
                       }
                       else
                       {
@@ -106,7 +105,6 @@ namespace StoreCatalogWPF.ViewModels
                   }));
             }
         }
-
 
     }
 }

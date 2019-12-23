@@ -24,5 +24,21 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct.PhotoVideoEquipments
                 return videoCompressionFormat;
             }
         }
+
+        private bool is3D;
+
+        public bool Is3D
+        {
+            set
+            {
+                is3D = value;
+                OnPropertyChanged("Is3D");
+            }
+            get
+            {
+                return is3D;
+            }
+        }
+        
     }
 }

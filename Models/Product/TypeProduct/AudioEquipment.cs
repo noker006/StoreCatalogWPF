@@ -41,7 +41,6 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
         }
 
         private int upperFrequencyRange;
-
         public int UpperFrequencyRange
         {
             set
@@ -52,21 +51,6 @@ namespace StoreCatalogWPF.Models.Product.TypeProduct
             get
             {
                 return upperFrequencyRange;
-            }
-        }
-
-        private int downFrequencyRange;
-
-        public int DownFrequencyRange
-        {
-            set
-            {
-                downFrequencyRange = value;
-                OnPropertyChanged("DownFrequencyRange");
-            }
-            get
-            {
-                return downFrequencyRange;
             }
         }
 

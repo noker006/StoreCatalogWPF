@@ -33,11 +33,10 @@ namespace StoreCatalogWPF.ViewModels
         }
 
         private GeneralProduct actualSelectedProduct;
-        private object selectedAudioEquipment;
-        private object selectedPhone_Phonegadget;
-        private object selectedPhotoVideoEquipment;
+        private GeneralProduct selectedAudioEquipment;
+        private GeneralProduct selectedPhone_Phonegadget;
+        private GeneralProduct selectedPhotoVideoEquipment;
         private string selectedTypeProduct;
-        private string selectedProducer;
         private string selectedTypeSearch;
         private string desiredString;
 
@@ -56,13 +55,114 @@ namespace StoreCatalogWPF.ViewModels
         private Visibility visibilityEditWeald;
         private Visibility visibilitySearch;
 
+
+
         private string minPrice;
         private string maxPrice;
+        private string minCapasity;
+        private string maxCapasity;
+        private string selectedProducer;
+        private List<string> producerList;
+        private string selectedUpperFrequencyRange;
+        private List<int> upperFrequencyRange;
+
+
+        public List<int> UpperFrequencyRange
+        {
+            set
+            {
+                upperFrequencyRange = value;
+                OnPropertyChanged();
+            }
+            get => upperFrequencyRange;
+        }
+        public List<string> ProducerList
+        {
+            set
+            {
+                producerList = value;
+                OnPropertyChanged();
+            }
+            get => producerList;
+        }
+        public string SelectedProducer
+        {
+            set
+            {
+                selectedProducer = value;
+                OnPropertyChanged();
+            }
+            get => selectedProducer;
+        }
+
+        private string MaxCapacity
+        {
+            set
+            {
+                maxCapasity = value;
+                catalog.MaxCapasity =Convert.ToDouble(maxCapasity);
+                OnPropertyChanged();
+            }
+            get => maxCapasity;
+        }
+        private string MinCapacity
+        {
+            set
+            {
+                minCapasity = value;
+                catalog.MinCapasity = Convert.ToDouble(minCapasity);
+                OnPropertyChanged();
+            }
+            get => minCapasity;
+        }
+        public string SelectedUpperFrequencyRange
+        {
+            set
+            {
+                selectedUpperFrequencyRange = value;
+                catalog.UpperFrequencyRange = Convert.ToDouble(selectedUpperFrequencyRange);
+                OnPropertyChanged();
+            }
+            get => selectedUpperFrequencyRange;
+        }
+        public string MinPrice
+        {
+            set
+            {
+                minPrice = value;
+                if (minPrice != "")
+                {
+                    catalog.MinPrice = Convert.ToDouble(minPrice);
+                }
+                OnPropertyChanged("MinPrice");
+            }
+            get
+            {
+                return minPrice;
+            }
+        }
+        public string MaxPrice
+        {
+            set
+            {
+                maxPrice = value;
+                if (maxPrice != "")
+                {
+                    catalog.MaxPrice = Convert.ToDouble(maxPrice);
+                }
+                OnPropertyChanged("MaxPrice");
+            }
+            get
+            {
+                return maxPrice;
+            }
+        }
+
+
+
         public List<string> TitlesTypeProduct { set; get; }
         public List<string> SearchList { set; get; }
-        private ObservableCollection<GeneralProduct> actualListProducts;
-        private List<string> producerList;
-        private List<GeneralProduct> ExtendedSelectedProducts=new List<GeneralProduct>();
+        private ObservableCollection<GeneralProduct> actualCollectionProducts;
 
         public Visibility VisibilityAudioEquipment
         {
@@ -150,10 +250,10 @@ namespace StoreCatalogWPF.ViewModels
                         {
                             VisibilityPhone_Phonegadget = Visibility.Collapsed;
                             VisibilityAudioEquipment = Visibility.Collapsed;
-                             VisibilityPhotoVideoEquipment = Visibility.Visible;
+                            VisibilityPhotoVideoEquipment = Visibility.Visible;
                             break;
                         }
-                    default:break;
+                    default: break;
                 }
                 OnPropertyChanged("SelectedTypeProduct");
             }
@@ -163,15 +263,17 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public object SelectedAudioEquipment
+        public GeneralProduct SelectedAudioEquipment
         {
             set
             {
                 selectedAudioEquipment = value;
                 VisibilitySearch = Visibility.Visible;
-                ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
-                catalog.RealListProducts=new List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
-                ProducerList = new List<string>(catalog.CreateListProducer(catalog.RealListProducts));
+                ActualCollectionProducts = catalog.CreateActualCollection(selectedAudioEquipment);
+                catalog.CreateRealCollection(ActualCollectionProducts);
+                ProducerList = catalog.CreateProducerList(selectedAudioEquipment);
+                UpperFrequencyRange = catalog.CreateUpperFrequencyRangeList(SelectedAudioEquipment);
+                catalog.ActualSelectedType = SelectedAudioEquipment;
                 OnPropertyChanged("SelectedAudioEquipment");
             }
             get
@@ -180,15 +282,16 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public object SelectedPhone_Phonegadget
+        public GeneralProduct SelectedPhone_Phonegadget
         {
             set
             {
                 selectedPhone_Phonegadget = value;
                 VisibilitySearch = Visibility.Visible;
-                ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(selectedPhone_Phonegadget));
-                catalog.RealListProducts= new List<GeneralProduct>(catalog.GetRequiredList(selectedPhone_Phonegadget));
-                ProducerList = new List<string>(catalog.CreateListProducer(catalog.RealListProducts));
+                ActualCollectionProducts = catalog.CreateActualCollection(selectedPhone_Phonegadget);
+                catalog.CreateRealCollection(ActualCollectionProducts);
+                ProducerList=catalog.CreateProducerList(selectedAudioEquipment);
+                catalog.ActualSelectedType = SelectedAudioEquipment;
                 OnPropertyChanged("SelectedPhone_Phonegadget");
             }
             get
@@ -197,15 +300,16 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-        public object SelectedPhotoVideoEquipment
+        public GeneralProduct SelectedPhotoVideoEquipment
         {
             set
             {
                 selectedPhotoVideoEquipment = value;
                 VisibilitySearch = Visibility.Visible;
-                ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(selectedPhotoVideoEquipment));
-                catalog.RealListProducts=new  List<GeneralProduct>(catalog.GetRequiredList(selectedAudioEquipment));
-                ProducerList = new List<string>(catalog.CreateListProducer(catalog.RealListProducts));
+                ActualCollectionProducts = catalog.CreateActualCollection(selectedPhotoVideoEquipment);
+                catalog.CreateRealCollection(ActualCollectionProducts);
+                ProducerList = catalog.CreateProducerList(selectedAudioEquipment);
+                catalog.ActualSelectedType = SelectedAudioEquipment;
                 OnPropertyChanged("SelectedPhotoVideoEquipment");
             }
             get
@@ -214,13 +318,11 @@ namespace StoreCatalogWPF.ViewModels
             }
         }
 
-
         public GeneralProduct ActualSelectedProduct
         {
             set
             {
                 actualSelectedProduct = value;
-                ExtendedSelectedProducts.Add(actualSelectedProduct);
                 OnPropertyChanged("ActualSelectedProduct");
             }
             get
@@ -242,13 +344,12 @@ namespace StoreCatalogWPF.ViewModels
                 return selectedTypeSearch;
             }
         }
-
         public string DesiredString
         {
             set
             {
                 desiredString = value;
-                ActualListProducts=new ObservableCollection<GeneralProduct>(catalog.Search(desiredString, catalog.RealListProducts));
+                ActualCollectionProducts=catalog.Search(desiredString);
                 OnPropertyChanged("DesiredString");
             }
             get
@@ -256,77 +357,21 @@ namespace StoreCatalogWPF.ViewModels
                 return desiredString;
             }
         }
-        public string SelectedProducer
-        {
-            set
-            {
-                selectedProducer = value;
-                catalog.RequiredProducer = selectedProducer;
-                OnPropertyChanged("SelecetdProducer");
-            }
-            get => selectedProducer;
-        }
         public List<object> AudioEquipments { set; get; }
         public List<object> Phones_Phonegadgets { set; get; }
         public List<object> PhotoVideoEquipments { set; get; }
-        public List<string> ProducerList
+        public ObservableCollection<GeneralProduct> ActualCollectionProducts
         {
             set
             {
-                producerList = value;
-                OnPropertyChanged("ProducerList");
+                actualCollectionProducts = value;
+                OnPropertyChanged("ActualCollectionProducts");
             }
             get
             {
-                return producerList;
+                return actualCollectionProducts;
             }
         }
-        public ObservableCollection<GeneralProduct> ActualListProducts
-        {
-            set
-            {
-                actualListProducts = value;
-                OnPropertyChanged("ActualListProducts");
-            }
-            get
-            {
-                return actualListProducts;
-            }
-        }
-
-        public string MinPrice
-        {
-            set
-            {
-                minPrice = value;
-                if (minPrice != "")
-                {
-                    catalog.MinPrice = Convert.ToDouble(minPrice);
-                }
-                OnPropertyChanged("MinPrice");
-            }
-            get
-            {
-                return minPrice;
-            }
-        }
-        public string MaxPrice
-        {
-            set
-            {
-                maxPrice = value;
-                if (maxPrice != "")
-                {
-                    catalog.MaxPrice = Convert.ToDouble(maxPrice);
-                }
-                OnPropertyChanged("MaxPrice");
-            }
-            get
-            {
-                return maxPrice;
-            }
-        }
-
         public RelayCommand Sort
         {
             get
@@ -334,11 +379,10 @@ namespace StoreCatalogWPF.ViewModels
                 return sort ??
                   (sort = new RelayCommand(obj =>
                   {
-                      ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GeneralSort(catalog.RealListProducts));
+                     catalog.GeneralSort(ActualCollectionProducts);
                   }));
             }
         }
-        
         public RelayCommand Edit
         {
             get
@@ -346,11 +390,11 @@ namespace StoreCatalogWPF.ViewModels
                 return edit ??
                   (edit = new RelayCommand(obj =>
                   {
-                      VisibilityEditWeald = Visibility.Visible;
+                      if (VisibilityEditWeald == Visibility.Visible) VisibilityEditWeald = Visibility.Collapsed;
+                      else VisibilityEditWeald = Visibility.Visible;
                   }));
             }
         }
-
         public RelayCommand Delete
         {
             get
@@ -358,13 +402,10 @@ namespace StoreCatalogWPF.ViewModels
                 return delete ??
                   (delete = new RelayCommand(obj =>
                   {
-                      catalog.DeleteProduct(ActualSelectedProduct);
-                      catalog.RealListProducts = new List<GeneralProduct>(catalog.GetRequiredList(ActualSelectedProduct));
-                      ActualListProducts = new ObservableCollection<GeneralProduct>(catalog.GetRequiredList(ActualSelectedProduct));
+                      catalog.DeleteProduct(ActualSelectedProduct,ActualCollectionProducts);
                   }));
             }
         }
-
         public RelayCommand Done
         {
             get
@@ -376,7 +417,6 @@ namespace StoreCatalogWPF.ViewModels
                   }));
             }
         }
-
         public RelayCommand Open
         {
             get
@@ -385,10 +425,10 @@ namespace StoreCatalogWPF.ViewModels
                   (open = new RelayCommand(obj =>
                   {
                       catalog.Open();
+                     if(catalog.ActualSelectedType != null) SelectedAudioEquipment = catalog.ActualSelectedType;
                   }));
             }
-        } 
-
+        }
         public RelayCommand Save
         {
             get
@@ -398,12 +438,11 @@ namespace StoreCatalogWPF.ViewModels
                   {
                       if (catalog.CatalogOpen)
                       {
-                          //catalog.Save();
+                         catalog.Save();
                       }
                   }));
             }
         }
-
         public RelayCommand Export
         {
             get
@@ -414,13 +453,12 @@ namespace StoreCatalogWPF.ViewModels
                       if (catalog.CatalogOpen)
                       {
                           catalog.Export();
-                          Root.CurrentVM = new IDExeptionVM("IDExeptionVM", Root);
+                          if(catalog.SameId_DifferentProduct) Root.CurrentVM = new IDExeptionVM("IDExeptionVM", Root);
                       }
                   }));
             }
         }
-
-        public RelayCommand Import 
+        public RelayCommand Import //переходит в Exeption в любом случае
         {
             get
             {
@@ -430,25 +468,22 @@ namespace StoreCatalogWPF.ViewModels
                       if (catalog.CatalogOpen)
                       {
                           catalog.Import();
-                          Root.CurrentVM = new IDExeptionVM("IDExeptionVM", Root);
+                          if (catalog.SameId_DifferentProduct==true&&catalog.ExportImportProducts!=null) Root.CurrentVM = new IDExeptionVM("IDExeptionVM", Root);
+                          if (catalog.ActualSelectedType != null) SelectedAudioEquipment = catalog.ActualSelectedType;
                       }
                   }));
             }
         }
 
         private RelayCommand saveAs;
-        
-        private RelayCommand SaveAs
+        public RelayCommand SaveAs
         {
             get
             {
                 return saveAs ??
                   (saveAs = new RelayCommand(obj =>
                   {
-                      if (catalog.CatalogOpen)
-                      {
-                          catalog.SaveAs();
-                      }
+                        catalog.SaveAs();                     
                   }));
             }
         }
